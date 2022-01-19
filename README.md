@@ -22,15 +22,23 @@ files/ansible
 │   └── all
 │       ├── api_base_urls.yaml
 │       └── apstra.yaml
-├── pb.create.vlans.yaml
-└── pb.manage.vlans.yaml
+├── create.vlans.yaml
+└── manage.vlans.yaml
 ```
 
 After changing to the correct directory, execute the playbooks of your choice from the command line
 
 ```bash
-$ ansible-playbook pb.create.vlans.yaml
-$ ansible-playbook pb.manage.vlans.yaml
+$ ansible-playbook create.vlans.yaml
+$ ansible-playbook manage.vlans.yaml
+```
+
+Alternatively, you can use Invoke to build a docker container and execute within it. Refer to the `tasks.py` file to learn more.
+
+```bash
+$ invoke build
+$ invoke create
+$ invoke manage
 ```
 
 If you used Ansible Vault to encrypt your secrets, you need to append the `--ask-vault-pass` to your command.
