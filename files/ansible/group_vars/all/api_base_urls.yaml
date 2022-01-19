@@ -1,0 +1,4 @@
+apstra:
+  base_url: "apstra.dmz.home"
+  username: "ansible"
+  password: "Juniper123"

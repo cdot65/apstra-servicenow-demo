@@ -1,0 +1,55 @@
+---
+### #################################################################
+### # MANAGE VLANS ON A TRUNK INTERFACE
+### #################################################################
+- hosts: localhost
+  gather_facts: False
+  become: False
+  connection: local
+  tasks:
+    ### #################################################################
+    ### # AUTHENTICATE AND RECEIVE AN API TOKEN FROM THE APSTRA SERVER
+    ### #################################################################
+    - name: retrieve an API token for our session
+      ansible.builtin.uri:
+        url: "https://{{ apstra.base_url }}/api/user/login"
+        method: POST
+        headers:
+          Content-Type: application/json
+        status_code: 201
+        validate_certs: False
+        body_format: json
+        body:
+          username: "{{ apstra.username }}"
+          password: "{{ apstra.password }}"
+      register: api_token
+
+    - name: create 'api_token' object by setting it equal to value in response
+      ansible.builtin.set_fact:
+        api_token: "{{ api_token.json.token }}"
+
+    # #################################################
+    # ### UPDATE CONNECTIVITY TEMPLATE FOR TRUNK
+    # #################################################
+    - name: "### UPDATE CONNECTIVITY TEMPLATES"
+      ansible.builtin.uri:
+        url: "https://{{ apstra.base_url }}/api/blueprints/{{ blueprint_name }}/obj-policy-import"
+        validate_certs: False
+        headers:
+          AuthToken: "{{ api_token }}"
+        return_content: False
+        status_code: 204
+        method: PUT
+        body:
+          policies:
+            - id: "{{ connectivity_template_name }}"
+              label: Virtual Network (Multiple)
+              description: "Add a list of VLANs to interfaces, as tagged or untagged."
+              policy_type_name: AttachMultipleVLAN
+              attributes:
+                untagged_vn_node_id: "{{ vlans.native }}"
+                tagged_vn_node_ids:
+                  - "{{ vlans.nfs }}"
+                  - "{{ vlan_id }}"
+              visible: false
+        body_format: json
