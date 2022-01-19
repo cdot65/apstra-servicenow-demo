@@ -18,7 +18,7 @@ from invoke import task
 ### ---------------------------------------------------------------------------
 ### DOCKER PARAMETERS
 ### ---------------------------------------------------------------------------
-DOCKER_IMG = "ghcr.io/cdot65/apstra-servicenow-demo"
+DOCKER_IMG = "ghcr.io/files/ansible-servicenow-demo"
 DOCKER_TAG = "0.0.1"
 
 ### ---------------------------------------------------------------------------
@@ -39,7 +39,7 @@ PWD = os.getcwd()
 def build(context):
     # Build our docker image
     context.run(
-        f"docker build -t {DOCKER_IMG}:{DOCKER_TAG} docker/",
+        f"docker build -t {DOCKER_IMG}:{DOCKER_TAG} files/docker/",
     )
 
 
@@ -47,14 +47,14 @@ def build(context):
 ### CREATE VLANS
 ### ---------------------------------------------------------------------------
 @task
-def create_vlans(context):
+def create(context):
     # Build our collections package
     print("Execute the create.vlans.yaml playbook within container")
     context.run(
         f"docker run \
             -it \
             --rm \
-            -v {PWD}/cdot65/apstra:/home/apstra \
+            -v {PWD}/files/ansible:/home/apstra \
             -w /home/apstra/ \
             {DOCKER_IMG}:{DOCKER_TAG} \
             ansible-playbook create.vlans.yaml",
@@ -66,14 +66,14 @@ def create_vlans(context):
 ### MANAGE VLANS
 ### ---------------------------------------------------------------------------
 @task
-def manage_vlans(context):
+def manage(context):
     # Manage vlans on a trunk
     print("Execute the manage.vlans.yaml playbook within container")
     context.run(
         f"docker run \
             -it \
             --rm \
-            -v {PWD}/cdot65/apstra:/home/apstra \
+            -v {PWD}/files/ansible:/home/apstra \
             -w /home/apstra/ \
             {DOCKER_IMG}:{DOCKER_TAG} \
             ansible-playbook manage.vlans.yaml",
@@ -90,7 +90,7 @@ def shell(context):
     print("Jump into a container")
     context.run(
         f"docker run -it --rm \
-            -v {PWD}/cdot65/apstra:/home/apstra \
+            -v {PWD}/files/ansible:/home/apstra \
             -w /home/apstra/ \
             {DOCKER_IMG}:{DOCKER_TAG} /bin/bash",
         pty=True,
