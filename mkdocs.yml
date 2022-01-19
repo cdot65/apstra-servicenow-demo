@@ -1,0 +1,50 @@
+site_name: Apstra ServiceNow Demo
+site_author: cdot65
+site_description: Apstra ServiceNow Demo
+docs_dir: docs/
+theme:
+  name: material
+  features:
+    - instant
+  highlightjs: true
+  hljs_languages:
+    - yaml
+    - python
+    - shell
+extra_css:
+  - stylesheets/cdot65.css
+copyright: Copyright &copy; 2022 cdot65
+repo_name: "apstra-servicenow-demo"
+repo_url: https://github.com/cdot65/apstra-servicenow-demo
+use_directory_urls: true
+nav:
+  - Homepage: index.md
+  - Ansible Modules:
+      - blueprint: blueprint.md
+      - design: design.md
+      - resources: resources.md
+
+markdown_extensions:
+  - smarty
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - fontawesome_markdown
+  - admonition
+  - codehilite:
+      guess_lang: true
+  - toc:
+      separator: "-"
+      permalink: "#"
+      baselevel: 1

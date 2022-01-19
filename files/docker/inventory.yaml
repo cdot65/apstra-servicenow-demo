@@ -1,0 +1,9 @@
+all:
+  children:
+    apstra_servers:
+      hosts:
+        apstra.dmz.home:
+          vars:
+            server: "apstra.dmz.home"
+            validate_certs: False
+            api_token: "{{ api_token }}"
