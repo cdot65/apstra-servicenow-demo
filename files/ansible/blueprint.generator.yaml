@@ -182,7 +182,7 @@
     # #################################################
     - name: "### POST SLACK MESSAGE"
       ansible.builtin.uri:
-        url: "https://hooks.slack.com/services/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"
+        url: "https://hooks.slack.com/services/{{ apstra.slack }}"
         return_content: yes
         status_code: 200
         method: POST
