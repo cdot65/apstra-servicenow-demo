@@ -1,16 +1,14 @@
 {
-    "extra_vars": {
-        "blueprint_name": "${blueprint_name}",
-        "resources_ippool_leaf": "${resources_ippool_leaf}",
-        "resources_ippool_spine": "${resources_ippool_spine}",
-        "resources_ippool_fabric": "${resources_ippool_fabric}",
-        "resources_asn_leaf": "${resources_asn_leaf}",
-        "resources_asn_spine": "${resources_asn_spine}",
-        "resources_vni_pool": "${resources_vni_pool}",
-        "platform_leaf": "${platform_leaf}",
-        "platform_spine": "${platform_spine}",
-        "design_rack_type": "${design_rack_type}",
-        "design_rack_count": "${design_rack_count}",
-        "design_spine_count": "${design_spine_count}"
-    }
+  "extra_vars": {
+    "blueprint_name": "${blueprint_name}",
+    "resources_ippool_leaf": "${resources_ippool_leaf}",
+    "resources_ippool_spine": "${resources_ippool_spine}",
+    "resources_ippool_fabric": "${resources_ippool_fabric}",
+    "resources_asn_leaf": "${resources_asn_leaf}",
+    "resources_asn_spine": "${resources_asn_spine}",
+    "resources_vni_pool": "${resources_vni_pool}",
+    "platform_leaf": "${platform_leaf}",
+    "platform_spine": "${platform_spine}",
+    "design_template": "${design_template}"
+  }
 }
