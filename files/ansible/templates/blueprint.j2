@@ -1,0 +1,52 @@
+#jinja2: lstrip_blocks: "True (or False)", trim_blocks: "True (or False)"
+---
+blocks:
+- type: header
+  text:
+    type: plain_text
+    text: ":robot_face: Apstra :robot_face:"
+
+- type: divider
+- type: context
+  elements:
+  - text: "Blueprint Bot"
+    type: mrkdwn
+
+- type: divider
+
+- type: section
+  text:
+    type: mrkdwn
+    text: |-
+      :round_pushpin: New Blueprint Created at site *{{ data_center_site }}*
+      https://{{ apstra.base_url }}/#/blueprints/{{ name_of_blueprint }}
+
+- type: divider
+
+- type: section
+  text:
+    type: mrkdwn
+    text: |-
+      Blueprint:
+        :white_small_square: Blueprint Name: *{{ name_of_blueprint }}*
+      Resources:
+        IP Pools:
+          :white_small_square: Leaf Loopback Pool: *{{ leaf_loopback_pool }}*
+          :white_small_square: Spine Loopback Pool: *{{ spine_loopback_pool }}*
+          :white_small_square: Fabric Underlay Pool: *{{ fabric_underlay_pool }}*
+        ASN Pools:
+          :white_small_square: Leaf ASN Pool: *{{ leaf_asn_pool }}*
+          :white_small_square: Spine Loopback Pool: *{{ spine_asn_pool }}*
+        VNI Pools:
+          :white_small_square: VNI Pool: *{{ vni_pool }}*
+      Design:
+        :white_small_square: Spine Platform: *{{ spine_platform }}*
+        :white_small_square: Leaf Platform: *{{ leaf_platform }}*
+        :white_small_square: Rack Type: *{{ rack_type }}*
+        :white_small_square: Number of Racks: *{{ number_of_racks }}*
+        :white_small_square: Number of Spine Switches: *{{ number_of_spine_switches }}*
+
+  accessory:
+    type: image
+    image_url: https://raw.githubusercontent.com/cdot65/svg-locker-shhhhh/master/apstra_0.3x.png
+    alt_text: Apstra

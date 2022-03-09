@@ -138,3 +138,4 @@ cython_debug/
 cdot65/apstra/*tar.gz
 *.sh
 .github/.prettierrc
+files/ansible/group_vars

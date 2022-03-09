@@ -1,0 +1,190 @@
+---
+# #################################################################
+# # CREATE EVERYTHING
+# #################################################################
+- hosts: localhost
+  gather_facts: False
+  become: False
+  connection: local
+  tasks:
+    # #################################################################
+    # # AUTHENTICATE AND RECEIVE AN API TOKEN FROM THE APSTRA SERVER
+    # #################################################################
+    - name: retrieve an API token for our session
+      ansible.builtin.uri:
+        url: "https://{{ apstra.base_url }}/api/user/login"
+        method: POST
+        headers:
+          Content-Type: application/json
+        status_code: 201
+        validate_certs: False
+        body_format: json
+        body:
+          username: "{{ apstra.username }}"
+          password: "{{ apstra.password }}"
+      register: api_token
+
+    - name: create 'api_token' object by setting it equal to value in response
+      ansible.builtin.set_fact:
+        api_token: "{{ api_token.json.token }}"
+
+    # #################################################################
+    # # CREATE IP POOL RESOURCES
+    # #################################################################
+    - name: "### CREATE LEAF LOOPBACK IP POOL"
+      cdot65.apstra.resources:
+        # define apstra server parameters
+        server: "{{ apstra.base_url }}"
+        api_token: "{{ api_token }}"
+
+        # define request
+        display_name: "Loopbacks: {{ name_of_blueprint }} Leaf"
+        type: "ip-pools"
+        tags:
+          - "{{ name_of_blueprint | lower }}"
+          - leaf
+        subnets:
+          - "{{ leaf_loopback_pool }}"
+
+        # define to delete or create
+        state: present
+
+    - name: "### CREATE SPINE LOOPBACK IP POOL"
+      cdot65.apstra.resources:
+        # define apstra server parameters
+        server: "{{ apstra.base_url }}"
+        api_token: "{{ api_token }}"
+
+        # define request
+        display_name: "Loopbacks: {{ name_of_blueprint }} Spine"
+        type: "ip-pools"
+        tags:
+          - "{{ name_of_blueprint }}"
+          - spine
+        subnets:
+          - "{{ spine_loopback_pool }}"
+
+        # define to delete or create
+        state: present
+
+    - name: "### CREATE DC FABRIC IP POOL"
+      cdot65.apstra.resources:
+        # define apstra server parameters
+        server: "{{ apstra.base_url }}"
+        api_token: "{{ api_token }}"
+
+        # define request
+        display_name: "Fabric: {{ name_of_blueprint }}"
+        type: "ip-pools"
+        tags:
+          - "{{ name_of_blueprint | lower }}"
+          - fabric
+        subnets:
+          - "{{ fabric_underlay_pool }}"
+
+        # define to delete or create
+        state: present
+
+    # #################################################################
+    # # CREATE ASN POOL RESOURCES
+    # #################################################################
+    - name: "### SPLIT UP ASN NUMBERS FROM SNOW"
+      ansible.builtin.set_fact:
+        spine_asn_pool_split: "{{ spine_asn_pool | range_splitter }}"
+        leaf_asn_pool_split: "{{ leaf_asn_pool | range_splitter }}"
+
+    - name: "### CREATE SPINE ASN POOL"
+      cdot65.apstra.resources:
+        # define apstra server parameters
+        server: "{{ apstra.base_url }}"
+        api_token: "{{ api_token }}"
+
+        # define request
+        type: "asn-pools"
+        display_name: "{{ name_of_blueprint }} Spine ASN Pool"
+        tags:
+          - "{{ name_of_blueprint | lower }}"
+        ranges:
+          - first: "{{ spine_asn_pool_split['first'] }}"
+            last: "{{ spine_asn_pool_split['last'] }}"
+
+        # define to delete or create
+        state: present
+
+    - name: "### CREATE LEAF ASN POOL"
+      cdot65.apstra.resources:
+        # define apstra server parameters
+        server: "{{ apstra.base_url }}"
+        api_token: "{{ api_token }}"
+
+        # define request
+        type: "asn-pools"
+        display_name: "{{ name_of_blueprint }} Leaf ASN Pool"
+        tags:
+          - "{{ name_of_blueprint | lower }}"
+        ranges:
+          - first: "{{ leaf_asn_pool_split['first'] }}"
+            last: "{{ leaf_asn_pool_split['last'] }}"
+
+        # define to delete or create
+        state: present
+
+    # #################################################################
+    # # CREATE VNI POOL RESOURCES
+    # #################################################################
+    - name: "### SPLIT UP VNI NUMBERS FROM SNOW"
+      ansible.builtin.set_fact:
+        vni_pool_split: "{{ vni_pool | range_splitter }}"
+
+    - name: "### CREATE VNI POOL WITH TWO RANGES"
+      cdot65.apstra.resources:
+        # define apstra server parameters
+        server: "{{ apstra.base_url }}"
+        api_token: "{{ api_token }}"
+
+        # define request
+        type: "vni-pools"
+        display_name: "{{ name_of_blueprint }} VNI Pool"
+        tags:
+          - "{{ name_of_blueprint | lower }}"
+        ranges:
+          - first: "{{ vni_pool_split['first'] }}"
+            last: "{{ vni_pool_split['last'] }}"
+
+        # define to delete or create
+        state: present
+
+    # #################################################################
+    # # CREATE A BLUEPRINT
+    # #################################################################
+    - name: "### CREATE BLUEPRINT"
+      cdot65.apstra.blueprint:
+        server: "{{ apstra.base_url }}"
+        api_token: "{{ api_token }}"
+        design: "two_stage_l3clos"
+        init_type: "template_reference"
+        template_id: "evpn-vqfx_offbox-virtual"
+        label: "{{ name_of_blueprint }}"
+        state: present
+      register: blueprint
+
+    # #####################################################
+    # ### FORMAT MESSAGE TO SLACK                       ###
+    # #####################################################
+    - name: "### FORMAT MESSAGE TO SLACK"
+      template:
+        src: "templates/blueprint.j2"
+        dest: "tmp/blueprint.yaml"
+        mode: 0640
+
+    # #################################################
+    # ### POST MESSAGE TO SLACK                     ###
+    # #################################################
+    - name: "### POST SLACK MESSAGE"
+      ansible.builtin.uri:
+        url: "https://hooks.slack.com/services/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"
+        return_content: yes
+        status_code: 200
+        method: POST
+        body: "{{ lookup('file', 'tmp/blueprint.yaml' ) | from_yaml | to_json }}"
+        body_format: json
