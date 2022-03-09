@@ -43,7 +43,7 @@
         body:
           virtual_networks:
             - virtual_gateway_ipv4_enabled: true
-              vn_id: null
+              vn_id: "{{ vni }}"
               vn_type: vxlan
               svi_ips:
                 - system_id: "{{ system_id.leaf1 }}"
