@@ -38,13 +38,13 @@
         api_token: "{{ api_token }}"
 
         # define request
-        display_name: "Loopbacks: {{ name_of_blueprint }} Leaf"
+        display_name: "Loopbacks: {{ blueprint_name }} Leaf"
         type: "ip-pools"
         tags:
-          - "{{ name_of_blueprint | lower }}"
+          - "{{ blueprint_name | lower }}"
           - leaf
         subnets:
-          - "{{ leaf_loopback_pool }}"
+          - "{{ resources_ippool_leaf }}"
 
         # define to delete or create
         state: present
@@ -56,13 +56,13 @@
         api_token: "{{ api_token }}"
 
         # define request
-        display_name: "Loopbacks: {{ name_of_blueprint }} Spine"
+        display_name: "Loopbacks: {{ blueprint_name }} Spine"
         type: "ip-pools"
         tags:
-          - "{{ name_of_blueprint }}"
+          - "{{ blueprint_name }}"
           - spine
         subnets:
-          - "{{ spine_loopback_pool }}"
+          - "{{ resources_ippool_spine }}"
 
         # define to delete or create
         state: present
@@ -74,13 +74,13 @@
         api_token: "{{ api_token }}"
 
         # define request
-        display_name: "Fabric: {{ name_of_blueprint }}"
+        display_name: "Fabric: {{ blueprint_name }}"
         type: "ip-pools"
         tags:
-          - "{{ name_of_blueprint | lower }}"
+          - "{{ blueprint_name | lower }}"
           - fabric
         subnets:
-          - "{{ fabric_underlay_pool }}"
+          - "{{ resources_ippool_fabric }}"
 
         # define to delete or create
         state: present
@@ -90,8 +90,8 @@
     # #################################################################
     - name: "### SPLIT UP ASN NUMBERS FROM SNOW"
       ansible.builtin.set_fact:
-        spine_asn_pool_split: "{{ spine_asn_pool | range_splitter }}"
-        leaf_asn_pool_split: "{{ leaf_asn_pool | range_splitter }}"
+        resources_asn_spine_split: "{{ resources_asn_spine | range_splitter }}"
+        resources_asn_leaf_split: "{{ resources_asn_leaf | range_splitter }}"
 
     - name: "### CREATE SPINE ASN POOL"
       cdot65.apstra.resources:
@@ -101,12 +101,12 @@
 
         # define request
         type: "asn-pools"
-        display_name: "{{ name_of_blueprint }} Spine ASN Pool"
+        display_name: "{{ blueprint_name }} Spine ASN Pool"
         tags:
-          - "{{ name_of_blueprint | lower }}"
+          - "{{ blueprint_name | lower }}"
         ranges:
-          - first: "{{ spine_asn_pool_split['first'] }}"
-            last: "{{ spine_asn_pool_split['last'] }}"
+          - first: "{{ resources_asn_spine_split['first'] }}"
+            last: "{{ resources_asn_spine_split['last'] }}"
 
         # define to delete or create
         state: present
@@ -119,12 +119,12 @@
 
         # define request
         type: "asn-pools"
-        display_name: "{{ name_of_blueprint }} Leaf ASN Pool"
+        display_name: "{{ blueprint_name }} Leaf ASN Pool"
         tags:
-          - "{{ name_of_blueprint | lower }}"
+          - "{{ blueprint_name | lower }}"
         ranges:
-          - first: "{{ leaf_asn_pool_split['first'] }}"
-            last: "{{ leaf_asn_pool_split['last'] }}"
+          - first: "{{ resources_asn_leaf_split['first'] }}"
+            last: "{{ resources_asn_leaf_split['last'] }}"
 
         # define to delete or create
         state: present
@@ -134,7 +134,7 @@
     # #################################################################
     - name: "### SPLIT UP VNI NUMBERS FROM SNOW"
       ansible.builtin.set_fact:
-        vni_pool_split: "{{ vni_pool | range_splitter }}"
+        resources_vni_pool_split: "{{ resources_vni_pool | range_splitter }}"
 
     - name: "### CREATE VNI POOL WITH TWO RANGES"
       cdot65.apstra.resources:
@@ -144,12 +144,12 @@
 
         # define request
         type: "vni-pools"
-        display_name: "{{ name_of_blueprint }} VNI Pool"
+        display_name: "{{ blueprint_name }} VNI Pool"
         tags:
-          - "{{ name_of_blueprint | lower }}"
+          - "{{ blueprint_name | lower }}"
         ranges:
-          - first: "{{ vni_pool_split['first'] }}"
-            last: "{{ vni_pool_split['last'] }}"
+          - first: "{{ resources_vni_pool_split['first'] }}"
+            last: "{{ resources_vni_pool_split['last'] }}"
 
         # define to delete or create
         state: present
@@ -164,7 +164,7 @@
         design: "two_stage_l3clos"
         init_type: "template_reference"
         template_id: "evpn-vqfx_offbox-virtual"
-        label: "{{ name_of_blueprint }}"
+        label: "{{ blueprint_name }}"
         state: present
       register: blueprint
 

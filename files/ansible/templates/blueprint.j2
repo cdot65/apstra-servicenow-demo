@@ -18,8 +18,8 @@ blocks:
   text:
     type: mrkdwn
     text: |-
-      :round_pushpin: New Blueprint Created at site *{{ data_center_site }}*
-      https://{{ apstra.base_url }}/#/blueprints/{{ name_of_blueprint }}
+      :round_pushpin: New Blueprint created
+      https://{{ apstra.base_url }}/#/blueprints/{{ blueprint_name }}
 
 - type: divider
 
@@ -28,23 +28,23 @@ blocks:
     type: mrkdwn
     text: |-
       Blueprint:
-        :white_small_square: Blueprint Name: *{{ name_of_blueprint }}*
+        :white_small_square: Blueprint Name: *{{ blueprint_name }}*
       Resources:
         IP Pools:
-          :white_small_square: Leaf Loopback Pool: *{{ leaf_loopback_pool }}*
-          :white_small_square: Spine Loopback Pool: *{{ spine_loopback_pool }}*
-          :white_small_square: Fabric Underlay Pool: *{{ fabric_underlay_pool }}*
+          :white_small_square: Leaf Loopback Pool: *{{ resources_ippool_leaf }}*
+          :white_small_square: Spine Loopback Pool: *{{ resources_ippool_spine }}*
+          :white_small_square: Fabric Underlay Pool: *{{ resources_ippool_fabric }}*
         ASN Pools:
-          :white_small_square: Leaf ASN Pool: *{{ leaf_asn_pool }}*
-          :white_small_square: Spine Loopback Pool: *{{ spine_asn_pool }}*
+          :white_small_square: Leaf ASN Pool: *{{ resources_asn_leaf }}*
+          :white_small_square: Spine Loopback Pool: *{{ resources_asn_spine }}*
         VNI Pools:
-          :white_small_square: VNI Pool: *{{ vni_pool }}*
+          :white_small_square: VNI Pool: *{{ resources_vni_pool }}*
       Design:
-        :white_small_square: Spine Platform: *{{ spine_platform }}*
-        :white_small_square: Leaf Platform: *{{ leaf_platform }}*
-        :white_small_square: Rack Type: *{{ rack_type }}*
-        :white_small_square: Number of Racks: *{{ number_of_racks }}*
-        :white_small_square: Number of Spine Switches: *{{ number_of_spine_switches }}*
+        :white_small_square: Spine Platform: *{{ platform_spine }}*
+        :white_small_square: Leaf Platform: *{{ platform_leaf }}*
+        :white_small_square: Rack Type: *{{ design_rack_type }}*
+        :white_small_square: Number of Racks: *{{ design_rack_count }}*
+        :white_small_square: Number of Spine Switches: *{{ design_spine_count }}*
 
   accessory:
     type: image
