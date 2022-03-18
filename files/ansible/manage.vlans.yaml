@@ -43,13 +43,12 @@
         body:
           policies:
             - id: "{{ connectivity_template_name }}"
-              label: Virtual Network (Multiple)
+              label: "Virtual Network (Multiple)"
               description: "Add a list of VLANs to interfaces, as tagged or untagged."
-              policy_type_name: AttachMultipleVLAN
+              policy_type_name: "AttachMultipleVLAN"
               attributes:
-                untagged_vn_node_id: "{{ vlans.native }}"
+                untagged_vn_node_id: "{{ native }}"
                 tagged_vn_node_ids:
-                  - "{{ vlans.nfs }}"
                   - "{{ vlan_id }}"
               visible: false
         body_format: json

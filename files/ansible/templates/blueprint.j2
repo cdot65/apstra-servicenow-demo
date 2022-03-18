@@ -1,0 +1,50 @@
+#jinja2: lstrip_blocks: "True (or False)", trim_blocks: "True (or False)"
+---
+blocks:
+- type: header
+  text:
+    type: plain_text
+    text: ":robot_face: Apstra :robot_face:"
+
+- type: divider
+- type: context
+  elements:
+  - text: "Blueprint Bot"
+    type: mrkdwn
+
+- type: divider
+
+- type: section
+  text:
+    type: mrkdwn
+    text: |-
+      :round_pushpin: New Blueprint created
+      https://{{ apstra.base_url }}/#/blueprints/{{ blueprint_name }}
+
+- type: divider
+
+- type: section
+  text:
+    type: mrkdwn
+    text: |-
+      Blueprint:
+        :white_small_square: Blueprint Name: *{{ blueprint_name }}*
+      Resources:
+        IP Pools:
+          :white_small_square: Leaf Loopback Pool: *{{ resources_ippool_leaf }}*
+          :white_small_square: Spine Loopback Pool: *{{ resources_ippool_spine }}*
+          :white_small_square: Fabric Underlay Pool: *{{ resources_ippool_fabric }}*
+        ASN Pools:
+          :white_small_square: Leaf ASN Pool: *{{ resources_asn_leaf }}*
+          :white_small_square: Spine Loopback Pool: *{{ resources_asn_spine }}*
+        VNI Pools:
+          :white_small_square: VNI Pool: *{{ resources_vni_pool }}*
+      Design:
+        :white_small_square: Spine Platform: *{{ platform_spine }}*
+        :white_small_square: Leaf Platform: *{{ platform_leaf }}*
+        :white_small_square: Design: *{{ design_template }}*
+
+  accessory:
+    type: image
+    image_url: https://raw.githubusercontent.com/cdot65/svg-locker-shhhhh/master/apstra_0.3x.png
+    alt_text: Apstra

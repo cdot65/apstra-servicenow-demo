@@ -1,6 +1,6 @@
 ---
 ### #################################################################
-### # UPDATE CONNECTIVITY TEMPLATE WITH NEW VXLAN NETWORK & PREFIX
+### # CREATE VLAN
 ### #################################################################
 - hosts: localhost
   gather_facts: False
@@ -29,9 +29,9 @@
         api_token: "{{ api_token.json.token }}"
 
     # #################################################
-    # ### CREATE NEW VXLAN
+    # ### CT WORK
     # #################################################
-    - name: "### UPDATE CONNECTIVITY TEMPLATES"
+    - name: "### Create VLAN"
       ansible.builtin.uri:
         url: "https://{{ apstra.base_url }}/api/blueprints/{{ blueprint_name }}/virtual-networks-batch"
         validate_certs: False
@@ -43,20 +43,20 @@
         body:
           virtual_networks:
             - virtual_gateway_ipv4_enabled: true
-              vn_id: null
+              vn_id: "{{ vni | string }}"
               vn_type: vxlan
               svi_ips:
-                - system_id: "{{ leaf1.chassis }}"
+                - system_id: "{{ system_id.leaf1 }}"
                   ipv4_mode: enabled
                   ipv4_addr: null
                   ipv6_mode: disabled
                   ipv6_addr: null
-                - system_id: "{{ leaf2.chassis }}"
+                - system_id: "{{ system_id.leaf2 }}"
                   ipv4_mode: enabled
                   ipv4_addr: null
                   ipv6_mode: disabled
                   ipv6_addr: null
-                - system_id: "{{ leaf3.chassis }}"
+                - system_id: "{{ system_id.leaf3 }}"
                   ipv4_mode: enabled
                   ipv4_addr: null
                   ipv6_mode: disabled
@@ -64,14 +64,14 @@
               virtual_gateway_ipv4: "{{ default_gateway_ip }}"
               ipv6_subnet: null
               bound_to:
-                - system_id: "{{ leaf1.id }}"
+                - system_id: "{{ system_id.esi1 }}"
                   access_switch_node_ids: []
                   vlan_id: "{{ vlan_id }}"
-                - system_id: "{{ leaf2.id }}"
+                - system_id: "{{ system_id.leaf3 }}"
                   access_switch_node_ids: []
                   vlan_id: "{{ vlan_id }}"
               vni_ids:
-                - 10111
+                - "{{ vni }}"
               virtual_gateway_ipv6: null
               ipv4_subnet: "{{ ip_prefix_of_vlan }}"
               rt_policy:
