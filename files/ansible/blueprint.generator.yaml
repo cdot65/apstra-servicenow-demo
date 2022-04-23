@@ -1,15 +1,11 @@
 ---
-# #################################################################
-# # CREATE EVERYTHING
-# #################################################################
+# Create Blueprint
 - hosts: localhost
   gather_facts: False
   become: False
   connection: local
   tasks:
-    # #################################################################
-    # # AUTHENTICATE AND RECEIVE AN API TOKEN FROM THE APSTRA SERVER
-    # #################################################################
+    # Retrieve API token
     - name: retrieve an API token for our session
       ansible.builtin.uri:
         url: "https://{{ apstra.base_url }}/api/user/login"
@@ -28,9 +24,7 @@
       ansible.builtin.set_fact:
         api_token: "{{ api_token.json.token }}"
 
-    # #################################################################
-    # # CREATE IP POOL RESOURCES
-    # #################################################################
+    # CREATE IP POOL RESOURCES
     - name: "### CREATE LEAF LOOPBACK IP POOL"
       cdot65.apstra.resources:
         # define apstra server parameters
@@ -85,9 +79,7 @@
         # define to delete or create
         state: present
 
-    # #################################################################
-    # # CREATE ASN POOL RESOURCES
-    # #################################################################
+    # CREATE ASN POOL RESOURCES
     - name: "### SPLIT UP ASN NUMBERS FROM SNOW"
       ansible.builtin.set_fact:
         resources_asn_spine_split: "{{ resources_asn_spine | range_splitter }}"
@@ -129,9 +121,7 @@
         # define to delete or create
         state: present
 
-    # #################################################################
-    # # CREATE VNI POOL RESOURCES
-    # #################################################################
+    # CREATE VNI POOL RESOURCES
     - name: "### SPLIT UP VNI NUMBERS FROM SNOW"
       ansible.builtin.set_fact:
         resources_vni_pool_split: "{{ resources_vni_pool | range_splitter }}"
@@ -154,9 +144,7 @@
         # define to delete or create
         state: present
 
-    # #################################################################
-    # # CREATE A BLUEPRINT
-    # #################################################################
+    # CREATE A BLUEPRINT
     - name: "### CREATE BLUEPRINT"
       cdot65.apstra.blueprint:
         server: "{{ apstra.base_url }}"
@@ -168,18 +156,14 @@
         state: present
       register: blueprint
 
-    # #####################################################
-    # ### FORMAT MESSAGE TO SLACK                       ###
-    # #####################################################
+    # FORMAT MESSAGE TO SLACK
     - name: "### FORMAT MESSAGE TO SLACK"
       template:
         src: "templates/blueprint.j2"
         dest: "tmp/blueprint.yaml"
         mode: 0640
 
-    # #################################################
-    # ### POST MESSAGE TO SLACK                     ###
-    # #################################################
+    # POST MESSAGE TO SLACK
     - name: "### POST SLACK MESSAGE"
       ansible.builtin.uri:
         url: "https://hooks.slack.com/services/{{ apstra.slack }}"
