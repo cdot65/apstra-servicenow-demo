@@ -67,6 +67,24 @@
       ansible.builtin.set_fact:
         security_zone: "{{ security_zone_instance.json | cleanup_security_zone }}"
 
+    - name: retrieve all redundancy groups
+      ansible.builtin.uri:
+        url: "https://{{ apstra.base_url }}/api/blueprints/evpn-vqfx_offbox-virtual/qe"
+        method: POST
+        headers:
+          Content-Type: application/json
+          AuthToken: "{{ api_token }}"
+        status_code: 200
+        validate_certs: False
+        body_format: json
+        body:
+          query: "node('redundancy_group', name='esi')"
+      register: redundancy_group
+
+    - name: Create an object 'redundancy_group' and set it to the output
+      ansible.builtin.set_fact:
+        redundancy_group_id: "{{ redundancy_group.json | cleanup_redundancy_group }}"
+
     # #################################################
     # ### CT WORK
     # #################################################
@@ -103,7 +121,7 @@
               virtual_gateway_ipv4: "{{ default_gateway_ip }}"
               ipv6_subnet: null
               bound_to:
-                - system_id: "47499360-6cf5-4436-a2a0-19138a25c42f"
+                - system_id: "{{ redundancy_group_id.id }}"
                   access_switch_node_ids: []
                   vlan_id: "{{ vlan_id }}"
                 - system_id: "{{ leafs.leaf3.id }}"
