@@ -45,9 +45,27 @@
           query: "match(node('system', name='leaf', role='leaf'))"
       register: leaf_system_ids
 
-    - name: create 'api_token' object by setting it equal to value in response
+    - name: Create an object 'leafs' and set it to the output of our cleanup
       ansible.builtin.set_fact:
-        leafs: "{{ leaf_system_ids.json.items | cleanup_leaf_ids }}"
+        leafs: "{{ leaf_system_ids.json | cleanup_leaf_ids }}"
+
+    - name: retrieve all routing instances
+      ansible.builtin.uri:
+        url: "https://{{ apstra.base_url }}/api/blueprints/evpn-vqfx_offbox-virtual/qe"
+        method: POST
+        headers:
+          Content-Type: application/json
+          AuthToken: "{{ api_token }}"
+        status_code: 200
+        validate_certs: False
+        body_format: json
+        body:
+          query: "match(node('security_zone', name='security_zone', label='{{ routing_instance }}'))"
+      register: security_zone_instance
+
+    - name: Create an object 'routing_instance' and set it to the output
+      ansible.builtin.set_fact:
+        security_zone: "{{ security_zone_instance.json | cleanup_security_zone }}"
 
     # #################################################
     # ### CT WORK
@@ -102,7 +120,7 @@
               ipv4_enabled: true
               virtual_gateway_ipv6_enabled: false
               ipv6_enabled: false
-              security_zone_id: "{{ routing_instance }}"
+              security_zone_id: "{{ security_zone.id }}"
               dhcp_service: dhcpServiceDisabled
               create_policy_tagged: true
         body_format: json

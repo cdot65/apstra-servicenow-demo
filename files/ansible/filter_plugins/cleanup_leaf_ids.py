@@ -14,15 +14,12 @@ class FilterModule(object):
         """Filter out filler from the response of our blueprint health."""
         leafs = {}
 
-        print('before if statement')
-
-        if isinstance(leaf_system_ids, list):
-            print('after if statement')
+        if isinstance(leaf_system_ids["items"], list):
             leafs["leaf1"] = {}
             leafs["leaf2"] = {}
             leafs["leaf3"] = {}
 
-            for each in leaf_system_ids:
+            for each in leaf_system_ids["items"]:
                 if each["leaf"]["label"] == "leaf1":
                     leafs["leaf1"]["hostname"] = each["leaf"]["hostname"]
                     leafs["leaf1"]["id"] = each["leaf"]["id"]
