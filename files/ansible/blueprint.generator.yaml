@@ -72,9 +72,9 @@
         # define request
         display_name: "Fabric: {{ blueprint_name }}"
         type: "ip-pools"
-        id: "{{ blueprint_name | upper }}_FABRIC"
+        id: "{{ blueprint_name | lower }}_fabric"
         tags:
-          - "{{ blueprint_name | lower }}"
+          - "{{ blueprint_name | upper }}"
           - fabric
         subnets:
           - "{{ resources_ippool_fabric }}"
@@ -97,9 +97,9 @@
         # define request
         type: "asn-pools"
         display_name: "{{ blueprint_name }} Spine ASN Pool"
-        id: "{{ blueprint_name | upper }}_SPINE_ASN"
+        id: "{{ blueprint_name | lower }}_spine_asn"
         tags:
-          - "{{ blueprint_name | lower }}"
+          - "{{ blueprint_name | upper }}"
         ranges:
           - first: "{{ resources_asn_spine_split['first'] }}"
             last: "{{ resources_asn_spine_split['last'] }}"
@@ -116,9 +116,9 @@
         # define request
         type: "asn-pools"
         display_name: "{{ blueprint_name }} Leaf ASN Pool"
-        id: "{{ blueprint_name | upper }}_LEAF_ASN"
+        id: "{{ blueprint_name | lower }}_leaf_asn"
         tags:
-          - "{{ blueprint_name | lower }}"
+          - "{{ blueprint_name | upper }}"
         ranges:
           - first: "{{ resources_asn_leaf_split['first'] }}"
             last: "{{ resources_asn_leaf_split['last'] }}"
@@ -140,9 +140,9 @@
         # define request
         type: "vni-pools"
         display_name: "{{ blueprint_name }} VNI Pool"
-        id: "{{ blueprint_name | upper }}_VNI"
+        id: "{{ blueprint_name | lower }}_vni"
         tags:
-          - "{{ blueprint_name | lower }}"
+          - "{{ blueprint_name | upper }}"
         ranges:
           - first: "{{ resources_vni_pool_split['first'] }}"
             last: "{{ resources_vni_pool_split['last'] }}"
