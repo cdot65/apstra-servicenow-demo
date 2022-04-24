@@ -97,6 +97,7 @@
         # define request
         type: "asn-pools"
         display_name: "{{ blueprint_name }} Spine ASN Pool"
+        id: "{{ blueprint_name | upper }}_SPINE_ASN"
         tags:
           - "{{ blueprint_name | lower }}"
         ranges:
@@ -115,6 +116,7 @@
         # define request
         type: "asn-pools"
         display_name: "{{ blueprint_name }} Leaf ASN Pool"
+        id: "{{ blueprint_name | upper }}_LEAF_ASN"
         tags:
           - "{{ blueprint_name | lower }}"
         ranges:
@@ -138,6 +140,7 @@
         # define request
         type: "vni-pools"
         display_name: "{{ blueprint_name }} VNI Pool"
+        id: "{{ blueprint_name | upper }}_VNI"
         tags:
           - "{{ blueprint_name | lower }}"
         ranges:
