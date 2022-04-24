@@ -15,41 +15,31 @@ limitations under the License.
 import os
 from invoke import task
 
-### ---------------------------------------------------------------------------
-### DOCKER PARAMETERS
-### ---------------------------------------------------------------------------
+# DOCKER PARAMETERS
 DOCKER_IMG = "ghcr.io/files/ansible-servicenow-demo"
 DOCKER_TAG = "0.0.1"
 
-### ---------------------------------------------------------------------------
-### ANSIBLE GALAXY PARAMETERS
-### ---------------------------------------------------------------------------
+# ANSIBLE GALAXY PARAMETERS
 GALAXY_KEY = os.getenv("GALAXY_KEY", "")
 COLLECTION_PACKAGE = f"cdot65-apstra-{DOCKER_TAG}.tar.gz"
 
-### ---------------------------------------------------------------------------
-### SYSTEM PARAMETERS
-### ---------------------------------------------------------------------------
+# SYSTEM PARAMETERS
 PWD = os.getcwd()
 
-### ---------------------------------------------------------------------------
-### DOCKER CONTAINER BUILD
-### ---------------------------------------------------------------------------
+
+# DOCKER CONTAINER BUILD
 @task
 def build(context):
-    # Build our docker image
+    """Build our docker image."""
     context.run(
         f"docker build -t {DOCKER_IMG}:{DOCKER_TAG} files/docker/",
     )
 
 
-### ---------------------------------------------------------------------------
-### CREATE VLANS
-### ---------------------------------------------------------------------------
+# CREATE VLANS
 @task
 def create(context):
-    # Build our collections package
-    print("Execute the create.vlans.yaml playbook within container")
+    """Execute the create.vlans.yaml playbook within container."""
     context.run(
         f"docker run \
             -it \
@@ -62,13 +52,10 @@ def create(context):
     )
 
 
-### ---------------------------------------------------------------------------
-### MANAGE VLANS
-### ---------------------------------------------------------------------------
+# MANAGE VLANS
 @task
 def manage(context):
-    # Manage vlans on a trunk
-    print("Execute the manage.vlans.yaml playbook within container")
+    """Execute the manage.vlans.yaml playbook within container."""
     context.run(
         f"docker run \
             -it \
@@ -81,13 +68,10 @@ def manage(context):
     )
 
 
-### ---------------------------------------------------------------------------
-### DOCKER CONTAINER SHELL
-### ---------------------------------------------------------------------------
+# DOCKER CONTAINER SHELL
 @task
 def shell(context):
-    # Get access to the BASH shell within our container
-    print("Jump into a container")
+    "Jump into a container."
     context.run(
         f"docker run -it --rm \
             -v {PWD}/files/ansible:/home/apstra \

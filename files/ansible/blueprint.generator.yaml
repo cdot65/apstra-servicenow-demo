@@ -1,15 +1,11 @@
 ---
-# #################################################################
-# # CREATE EVERYTHING
-# #################################################################
+# Create Blueprint
 - hosts: localhost
   gather_facts: False
   become: False
   connection: local
   tasks:
-    # #################################################################
-    # # AUTHENTICATE AND RECEIVE AN API TOKEN FROM THE APSTRA SERVER
-    # #################################################################
+    # Retrieve API token
     - name: retrieve an API token for our session
       ansible.builtin.uri:
         url: "https://{{ apstra.base_url }}/api/user/login"
@@ -28,9 +24,7 @@
       ansible.builtin.set_fact:
         api_token: "{{ api_token.json.token }}"
 
-    # #################################################################
-    # # CREATE IP POOL RESOURCES
-    # #################################################################
+    # CREATE IP POOL RESOURCES
     - name: "### CREATE LEAF LOOPBACK IP POOL"
       cdot65.apstra.resources:
         # define apstra server parameters
@@ -40,6 +34,7 @@
         # define request
         display_name: "Loopbacks: {{ blueprint_name }} Leaf"
         type: "ip-pools"
+        id: "{{ blueprint_name | upper }}_LEAF_LOOPBACK"
         tags:
           - "{{ blueprint_name | lower }}"
           - leaf
@@ -58,6 +53,7 @@
         # define request
         display_name: "Loopbacks: {{ blueprint_name }} Spine"
         type: "ip-pools"
+        id: "{{ blueprint_name | upper }}_SPINE_LOOPBACK"
         tags:
           - "{{ blueprint_name }}"
           - spine
@@ -76,8 +72,9 @@
         # define request
         display_name: "Fabric: {{ blueprint_name }}"
         type: "ip-pools"
+        id: "{{ blueprint_name | lower }}_fabric"
         tags:
-          - "{{ blueprint_name | lower }}"
+          - "{{ blueprint_name | upper }}"
           - fabric
         subnets:
           - "{{ resources_ippool_fabric }}"
@@ -85,9 +82,7 @@
         # define to delete or create
         state: present
 
-    # #################################################################
-    # # CREATE ASN POOL RESOURCES
-    # #################################################################
+    # CREATE ASN POOL RESOURCES
     - name: "### SPLIT UP ASN NUMBERS FROM SNOW"
       ansible.builtin.set_fact:
         resources_asn_spine_split: "{{ resources_asn_spine | range_splitter }}"
@@ -102,8 +97,9 @@
         # define request
         type: "asn-pools"
         display_name: "{{ blueprint_name }} Spine ASN Pool"
+        id: "{{ blueprint_name | lower }}_spine_asn"
         tags:
-          - "{{ blueprint_name | lower }}"
+          - "{{ blueprint_name | upper }}"
         ranges:
           - first: "{{ resources_asn_spine_split['first'] }}"
             last: "{{ resources_asn_spine_split['last'] }}"
@@ -120,8 +116,9 @@
         # define request
         type: "asn-pools"
         display_name: "{{ blueprint_name }} Leaf ASN Pool"
+        id: "{{ blueprint_name | lower }}_leaf_asn"
         tags:
-          - "{{ blueprint_name | lower }}"
+          - "{{ blueprint_name | upper }}"
         ranges:
           - first: "{{ resources_asn_leaf_split['first'] }}"
             last: "{{ resources_asn_leaf_split['last'] }}"
@@ -129,9 +126,7 @@
         # define to delete or create
         state: present
 
-    # #################################################################
-    # # CREATE VNI POOL RESOURCES
-    # #################################################################
+    # CREATE VNI POOL RESOURCES
     - name: "### SPLIT UP VNI NUMBERS FROM SNOW"
       ansible.builtin.set_fact:
         resources_vni_pool_split: "{{ resources_vni_pool | range_splitter }}"
@@ -145,8 +140,9 @@
         # define request
         type: "vni-pools"
         display_name: "{{ blueprint_name }} VNI Pool"
+        id: "{{ blueprint_name | lower }}_vni"
         tags:
-          - "{{ blueprint_name | lower }}"
+          - "{{ blueprint_name | upper }}"
         ranges:
           - first: "{{ resources_vni_pool_split['first'] }}"
             last: "{{ resources_vni_pool_split['last'] }}"
@@ -154,9 +150,7 @@
         # define to delete or create
         state: present
 
-    # #################################################################
-    # # CREATE A BLUEPRINT
-    # #################################################################
+    # CREATE A BLUEPRINT
     - name: "### CREATE BLUEPRINT"
       cdot65.apstra.blueprint:
         server: "{{ apstra.base_url }}"
@@ -165,21 +159,18 @@
         init_type: "template_reference"
         template_id: "evpn-vqfx_offbox-virtual"
         label: "{{ blueprint_name }}"
+        id: "{{ blueprint_name | lower }}"
         state: present
       register: blueprint
 
-    # #####################################################
-    # ### FORMAT MESSAGE TO SLACK                       ###
-    # #####################################################
+    # FORMAT MESSAGE TO SLACK
     - name: "### FORMAT MESSAGE TO SLACK"
       template:
         src: "templates/blueprint.j2"
         dest: "tmp/blueprint.yaml"
         mode: 0640
 
-    # #################################################
-    # ### POST MESSAGE TO SLACK                     ###
-    # #################################################
+    # POST MESSAGE TO SLACK
     - name: "### POST SLACK MESSAGE"
       ansible.builtin.uri:
         url: "https://hooks.slack.com/services/{{ apstra.slack }}"
