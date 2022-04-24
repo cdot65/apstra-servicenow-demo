@@ -173,7 +173,7 @@
     # POST MESSAGE TO SLACK
     - name: "### POST SLACK MESSAGE"
       ansible.builtin.uri:
-        url: "https://hooks.slack.com/services/{{ apstra.slack }}"
+        url: "https://hooks.slack.com/services/C01UK1SDA3B"
         return_content: yes
         status_code: 200
         method: POST
