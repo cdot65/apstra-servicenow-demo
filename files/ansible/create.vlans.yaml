@@ -37,6 +37,7 @@
         method: POST
         headers:
           Content-Type: application/json
+          AuthToken: "{{ api_token }}"
         status_code: 200
         validate_certs: False
         body_format: json
