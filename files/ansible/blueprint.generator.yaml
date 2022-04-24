@@ -34,6 +34,7 @@
         # define request
         display_name: "Loopbacks: {{ blueprint_name }} Leaf"
         type: "ip-pools"
+        id: "{{ blueprint_name | upper }}_LEAF_LOOPBACK"
         tags:
           - "{{ blueprint_name | lower }}"
           - leaf
@@ -52,6 +53,7 @@
         # define request
         display_name: "Loopbacks: {{ blueprint_name }} Spine"
         type: "ip-pools"
+        id: "{{ blueprint_name | upper }}_SPINE_LOOPBACK"
         tags:
           - "{{ blueprint_name }}"
           - spine
@@ -70,6 +72,7 @@
         # define request
         display_name: "Fabric: {{ blueprint_name }}"
         type: "ip-pools"
+        id: "{{ blueprint_name | upper }}_FABRIC"
         tags:
           - "{{ blueprint_name | lower }}"
           - fabric
