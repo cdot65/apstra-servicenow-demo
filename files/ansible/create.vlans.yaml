@@ -33,7 +33,7 @@
     ### #################################################################
     - name: retrieve all leaf devices
       ansible.builtin.uri:
-        url: "https://{{ apstra.base_url }}/blueprints/evpn-vqfx_offbox-virtual/qe"
+        url: "https://{{ apstra.base_url }}/api/blueprints/evpn-vqfx_offbox-virtual/qe"
         method: POST
         headers:
           Content-Type: application/json
