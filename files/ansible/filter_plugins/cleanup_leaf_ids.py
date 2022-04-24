@@ -14,8 +14,8 @@ class FilterModule(object):
         """Filter out filler from the response of our blueprint health."""
         leafs = {}
 
-        if isinstance(leaf_system_ids["items"], list):
-            for each in leaf_system_ids["items"]:
+        if isinstance(leaf_system_ids, list):
+            for each in leaf_system_ids:
                 if each["leaf"]["label"] == "leaf1":
                     leafs["leaf1"] = {}
                     leafs["leaf1"]["hostname"] = each["leaf"]["hostname"]

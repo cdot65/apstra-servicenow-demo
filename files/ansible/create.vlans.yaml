@@ -47,7 +47,7 @@
 
     - name: create 'api_token' object by setting it equal to value in response
       ansible.builtin.set_fact:
-        leafs: "{{ leaf_system_ids | cleanup_leaf_ids }}"
+        leafs: "{{ leaf_system_ids.json.items | cleanup_leaf_ids }}"
 
     # #################################################
     # ### CT WORK
