@@ -333,57 +333,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#yaml-titlecdot65apstrateststestsyaml" class="md-nav__link">
-    ``` yaml title="cdot65/apstra/tests/tests.yaml"
+  <a href="#data-model" class="md-nav__link">
+    Data Model
   </a>
-  
-    <nav class="md-nav" aria-label="``` yaml title="cdot65/apstra/tests/tests.yaml"">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-design-play" class="md-nav__link">
-    # CREATE DESIGN PLAY
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-a-new-logical-device-on-apstra-server" class="md-nav__link">
-    # CREATE A NEW LOGICAL DEVICE ON APSTRA SERVER
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -477,57 +429,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#yaml-titlecdot65apstrateststestsyaml" class="md-nav__link">
-    ``` yaml title="cdot65/apstra/tests/tests.yaml"
+  <a href="#data-model" class="md-nav__link">
+    Data Model
   </a>
-  
-    <nav class="md-nav" aria-label="``` yaml title="cdot65/apstra/tests/tests.yaml"">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-design-play" class="md-nav__link">
-    # CREATE DESIGN PLAY
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-a-new-logical-device-on-apstra-server" class="md-nav__link">
-    # CREATE A NEW LOGICAL DEVICE ON APSTRA SERVER
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -589,1161 +493,1151 @@
 </table>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h2>
 <p>Here is a basic example of using the module to mange your designs in Apstra</p>
-<h2 id="yaml-titlecdot65apstrateststestsyaml">``` yaml title=&rdquo;cdot65/apstra/tests/tests.yaml&rdquo;<a class="headerlink" href="#yaml-titlecdot65apstrateststestsyaml" title="Permanent link">#</a></h2>
-<h3 id="_1"><a class="headerlink" href="#_1" title="Permanent link">#</a></h3>
-<h3 id="create-design-play"># CREATE DESIGN PLAY<a class="headerlink" href="#create-design-play" title="Permanent link">#</a></h3>
-<h3 id="_2"><a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
-<ul>
-<li>
-<p>hosts: localhost
-  gather_facts: False
-  become: False
-  tasks:
-    ### #################################################################
-    ### # AUTHENTICATE AND RECEIVE AN API TOKEN FROM THE APSTRA SERVER
-    ### #################################################################</p>
-<ul>
-<li>
-<p>name: retrieve an API token for our session
-  ansible.builtin.uri:
-    url: <a href="https://apstra.dmz.home/api/user/login">https://apstra.dmz.home/api/user/login</a>
-    method: POST
-    headers:
-        Content-Type: application/json
-    status_code: 201
-    validate_certs: False
-    body_format: json
-    body:
-        username: apstra
-        password: apstra123
-  register: api_token</p>
-</li>
-<li>
-<p>name: create &lsquo;api_token&rsquo; object by setting it equal to value in response
-  ansible.builtin.set_fact:
-    api_token: &ldquo;example123&rdquo;      </p>
-</li>
-</ul>
-<h3 id="_3"><a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
-<h3 id="create-a-new-logical-device-on-apstra-server"># CREATE A NEW LOGICAL DEVICE ON APSTRA SERVER<a class="headerlink" href="#create-a-new-logical-device-on-apstra-server" title="Permanent link">#</a></h3>
-<h3 id="_4"><a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
-<ul>
-<li>
-<p>name: Create a logical device
-  cdot65.apstra.design:
-    # define server connectivity options
-    server: apstra.dmz.home
-    port: 443
-    validate_certs: False
-    api_token: &ldquo;example123&rdquo;</p>
-<h1 id="define-design-element-logical-device">define design element (logical device)<a class="headerlink" href="#define-design-element-logical-device" title="Permanent link">#</a></h1>
-<p>type: &ldquo;logical-devices&rdquo;
-display_name: &ldquo;cicd_test&rdquo;
-panels:
-  - panel_layout:
-      row_count: 1
-      column_count: 12
-    port_indexing:
-        order: &ldquo;T-B, L-R&rdquo;
-        schema: &ldquo;absolute&rdquo;
-        start_index: 1
-    port_groups:
-      - count: 12
-        roles:
-          - leaf
-        speed:
-          value: 10
-          unit: &ldquo;G&rdquo;</p>
-<h1 id="state-whether-you-want-to-create-or-delete-this-resource">state whether you want to create or delete this resource<a class="headerlink" href="#state-whether-you-want-to-create-or-delete-this-resource" title="Permanent link">#</a></h1>
-<p>state: present</p>
-<h1 id="store-the-output-of-our-task-as-a-new-variable-to-debug-later">store the output of our task as a new variable to debug later<a class="headerlink" href="#store-the-output-of-our-task-as-a-new-variable-to-debug-later" title="Permanent link">#</a></h1>
-<p>register: cicd_test_logical_device</p>
-</li>
-</ul>
-<h3 id="_5"><a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
-<h3 id="create-a-new-interface-mapping-on-apstra-server"># CREATE A NEW INTERFACE MAPPING ON APSTRA SERVER<a class="headerlink" href="#create-a-new-interface-mapping-on-apstra-server" title="Permanent link">#</a></h3>
-<h3 id="_6"><a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
-<ul>
-<li>
-<p>name: Create an interface mapping
-  cdot65.apstra.design:
-    # define server connectivity options
-    server: apstra.dmz.home
-    port: 443
-    validate_certs: False
-    api_token: &ldquo;example123&rdquo;</p>
-<h1 id="define-design-element-logical-device_1">define design element (logical device)<a class="headerlink" href="#define-design-element-logical-device_1" title="Permanent link">#</a></h1>
-<p>type: &ldquo;interface-maps&rdquo;
-label: &ldquo;cicd_test&rdquo;
-logical_device_id: &ldquo;cicd_test&rdquo;
-device_profile_id: &ldquo;Juniper_vQFX&rdquo;
-interfaces:
-  - name: &ldquo;xe-0/0/0&rdquo;
-    roles:
-        - leaf
-    mapping: 
-        - 1
-        - 1
-        - 1
-        - 1
-        - 1
-    state: &ldquo;active&rdquo;
-    setting: 
-        param: &ldquo;{"interface": {"speed": ""}, "global": {"speed": ""}}&rdquo;
-    position: 1
-    speed:
-        unit: &ldquo;G&rdquo;
-        value: 10</p>
-<ul>
-<li>name: &ldquo;xe-0/0/11&rdquo;
-    roles:
-        - leaf
-    mapping: 
-        - 12
-        - 1
-        - 1
-        - 1
-        - 12
-    state: &ldquo;active&rdquo;
-    setting: 
-        param: &ldquo;{"interface": {"speed": ""}, "global": {"speed": ""}}&rdquo;
-    position: 12
-    speed:
-        unit: &ldquo;G&rdquo;
-        value: 10</li>
-</ul>
-<h1 id="state-whether-you-want-to-create-or-delete-this-resource_1">state whether you want to create or delete this resource<a class="headerlink" href="#state-whether-you-want-to-create-or-delete-this-resource_1" title="Permanent link">#</a></h1>
-<p>state: present</p>
-<h1 id="store-the-output-of-our-task-as-a-new-variable-to-debug-later_1">store the output of our task as a new variable to debug later<a class="headerlink" href="#store-the-output-of-our-task-as-a-new-variable-to-debug-later_1" title="Permanent link">#</a></h1>
-<p>register: cicd_test_interface_maps</p>
-</li>
-</ul>
-<h3 id="_7"><a class="headerlink" href="#_7" title="Permanent link">#</a></h3>
-<h3 id="create-a-new-rack-type-on-apstra-server"># CREATE A NEW RACK TYPE ON APSTRA SERVER<a class="headerlink" href="#create-a-new-rack-type-on-apstra-server" title="Permanent link">#</a></h3>
-<h3 id="_8"><a class="headerlink" href="#_8" title="Permanent link">#</a></h3>
-<ul>
-<li>
-<p>name: Create a Rack Type
-  cdot65.apstra.design:
-    # define server connectivity options
-    server: apstra.dmz.home
-    port: 443
-    validate_certs: False
-    api_token: &ldquo;example123&rdquo;</p>
-<h1 id="define-design-element-logical-device_2">define design element (logical device)<a class="headerlink" href="#define-design-element-logical-device_2" title="Permanent link">#</a></h1>
-<p>type: &ldquo;rack-types&rdquo;
-label: &ldquo;cicd_test&rdquo;
-access_switches: []
-description: cicd_test
-display_name: cicd_test
-id: cicd_test
-leafs:
-  - link_per_spine_count: 1
-    redundancy_protocol:
-    leaf_leaf_link_speed:
-    external_router_links: []
-    leaf_leaf_l3_link_count: 0
-    leaf_leaf_l3_link_speed:
-    link_per_spine_speed:
-        unit: G
-        value: 10
-    external_router_facing: false
-    label: cicd_test
-    leaf_leaf_l3_link_port_channel_id: 0
-    leaf_leaf_link_port_channel_id: 0
-    logical_device: &ldquo;cicd_test&rdquo;
-    leaf_leaf_link_count: 0
-logical_devices:
-  - display_name: AOS-1x10-1
-    id: AOS-1x10-1
-    panels:
-      - panel_layout:
-            row_count: 1
-            column_count: 1
-        port_indexing:
-            order: T-B, L-R
-            start_index: 1
-            schema: absolute
-        port_groups:
-          - count: 1
-            speed:
-                unit: G
-                value: 10
-            roles:
-                - leaf
-                - access  <br />
-  - display_name: vqfx_leaf
-    id: &ldquo;cicd_test&rdquo;
-    panels:
-      - panel_layout:
-            row_count: 1
-            column_count: 12
-        port_indexing:
-            order: T-B, L-R
-            start_index: 1
-            schema: absolute
-        port_groups:
-          - count: 4
-            speed:
-                unit: G
-                value: 10
-            roles:
-                - spine
-          - count: 7
-            speed:
-                unit: G
-                value: 10
-            roles:
-                - l2_server
-                - access
-                - l3_server
-          - count: 1
-            speed:
-                unit: G
-                value: 10
-            roles:
-                - external_router  <br />
-servers:
-  - count: 1
-    ip_version: ipv4
-    port_channel_id_min: 0
-    port_channel_id_max: 0
-    connectivity_type: l2
-    links:
-      - link_per_switch_count: 1
-        link_speed:
-            unit: G
-            value: 10
-        target_switch_label: cicd_test
-        lag_mode:
-        leaf_peer:
-        attachment_type: singleAttached
-        label: cicd_test
-    label: cicd_test
-    logical_device: AOS-1x10-1</p>
-<h1 id="state-whether-you-want-to-create-or-delete-this-resource_2">state whether you want to create or delete this resource<a class="headerlink" href="#state-whether-you-want-to-create-or-delete-this-resource_2" title="Permanent link">#</a></h1>
-<p>state: present</p>
-<h1 id="store-the-output-of-our-task-as-a-new-variable-to-debug-later_2">store the output of our task as a new variable to debug later<a class="headerlink" href="#store-the-output-of-our-task-as-a-new-variable-to-debug-later_2" title="Permanent link">#</a></h1>
-<p>register: cicd_test_rack_type</p>
-</li>
-</ul>
-</li>
-</ul>
-<p>```</p>
+<div class="highlight"><span class="filename">cdot65/apstra/tests/tests.yaml</span><pre><span></span><code><span class="nn">---</span><span class="w"></span>
+<span class="c1">### #################################################################</span><span class="w"></span>
+<span class="c1">### # CREATE DESIGN PLAY</span><span class="w"></span>
+<span class="c1">### #################################################################</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">localhost</span><span class="w"></span>
+<span class="w">  </span><span class="nt">gather_facts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### # AUTHENTICATE AND RECEIVE AN API TOKEN FROM THE APSTRA SERVER</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">retrieve an API token for our session</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.uri</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://apstra.dmz.home/api/user/login</span><span class="w"></span>
+<span class="w">        </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">POST</span><span class="w"></span>
+<span class="w">        </span><span class="nt">headers</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">Content-Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">application/json</span><span class="w"></span>
+<span class="w">        </span><span class="nt">status_code</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">201</span><span class="w"></span>
+<span class="w">        </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">        </span><span class="nt">body_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span><span class="w"></span>
+<span class="w">        </span><span class="nt">body</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apstra</span><span class="w"></span>
+<span class="w">            </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apstra123</span><span class="w"></span>
+<span class="w">      </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_token</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">create &#39;api_token&#39; object by setting it equal to value in response</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.set_fact</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example123&quot;</span><span class="w">      </span>
+
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### # CREATE A NEW LOGICAL DEVICE ON APSTRA SERVER</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create a logical device</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cdot65.apstra.design</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="c1"># define server connectivity options</span><span class="w"></span>
+<span class="w">        </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apstra.dmz.home</span><span class="w"></span>
+<span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span><span class="w"></span>
+<span class="w">        </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">        </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example123&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># define design element (logical device)</span><span class="w"></span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;logical-devices&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cicd_test&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">panels</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">panel_layout</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">row_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">              </span><span class="nt">column_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12</span><span class="w"></span>
+<span class="w">            </span><span class="nt">port_indexing</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">order</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;T-B,</span><span class="nv"> </span><span class="s">L-R&quot;</span><span class="w"></span>
+<span class="w">                </span><span class="nt">schema</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;absolute&quot;</span><span class="w"></span>
+<span class="w">                </span><span class="nt">start_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">            </span><span class="nt">port_groups</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12</span><span class="w"></span>
+<span class="w">                </span><span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">leaf</span><span class="w"></span>
+<span class="w">                </span><span class="nt">speed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;G&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># state whether you want to create or delete this resource</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># store the output of our task as a new variable to debug later</span><span class="w"></span>
+<span class="w">        </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test_logical_device</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### # CREATE A NEW INTERFACE MAPPING ON APSTRA SERVER</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create an interface mapping</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cdot65.apstra.design</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="c1"># define server connectivity options</span><span class="w"></span>
+<span class="w">        </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apstra.dmz.home</span><span class="w"></span>
+<span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span><span class="w"></span>
+<span class="w">        </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">        </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example123&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># define design element (logical device)</span><span class="w"></span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;interface-maps&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cicd_test&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">logical_device_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cicd_test&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">device_profile_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Juniper_vQFX&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">interfaces</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;xe-0/0/0&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">leaf</span><span class="w"></span>
+<span class="w">            </span><span class="nt">mapping</span><span class="p">:</span><span class="w"> </span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">            </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;active&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">setting</span><span class="p">:</span><span class="w"> </span>
+<span class="w">                </span><span class="nt">param</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{\&quot;interface\&quot;:</span><span class="nv"> </span><span class="s">{\&quot;speed\&quot;:</span><span class="nv"> </span><span class="s">\&quot;\&quot;},</span><span class="nv"> </span><span class="s">\&quot;global\&quot;:</span><span class="nv"> </span><span class="s">{\&quot;speed\&quot;:</span><span class="nv"> </span><span class="s">\&quot;\&quot;}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">            </span><span class="nt">speed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;G&quot;</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;xe-0/0/11&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">leaf</span><span class="w"></span>
+<span class="w">            </span><span class="nt">mapping</span><span class="p">:</span><span class="w"> </span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12</span><span class="w"></span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12</span><span class="w"></span>
+<span class="w">            </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;active&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">setting</span><span class="p">:</span><span class="w"> </span>
+<span class="w">                </span><span class="nt">param</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{\&quot;interface\&quot;:</span><span class="nv"> </span><span class="s">{\&quot;speed\&quot;:</span><span class="nv"> </span><span class="s">\&quot;\&quot;},</span><span class="nv"> </span><span class="s">\&quot;global\&quot;:</span><span class="nv"> </span><span class="s">{\&quot;speed\&quot;:</span><span class="nv"> </span><span class="s">\&quot;\&quot;}}&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">position</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12</span><span class="w"></span>
+<span class="w">            </span><span class="nt">speed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;G&quot;</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># state whether you want to create or delete this resource</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># store the output of our task as a new variable to debug later</span><span class="w"></span>
+<span class="w">        </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test_interface_maps</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### # CREATE A NEW RACK TYPE ON APSTRA SERVER</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create a Rack Type</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cdot65.apstra.design</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="c1"># define server connectivity options</span><span class="w"></span>
+<span class="w">        </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apstra.dmz.home</span><span class="w"></span>
+<span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span><span class="w"></span>
+<span class="w">        </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">        </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example123&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># define design element (logical device)</span><span class="w"></span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;rack-types&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cicd_test&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">access_switches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+<span class="w">        </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test</span><span class="w"></span>
+<span class="w">        </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test</span><span class="w"></span>
+<span class="w">        </span><span class="nt">leafs</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">link_per_spine_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">            </span><span class="nt">redundancy_protocol</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">leaf_leaf_link_speed</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">external_router_links</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+<span class="w">            </span><span class="nt">leaf_leaf_l3_link_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">            </span><span class="nt">leaf_leaf_l3_link_speed</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">link_per_spine_speed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">G</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">            </span><span class="nt">external_router_facing</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">            </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test</span><span class="w"></span>
+<span class="w">            </span><span class="nt">leaf_leaf_l3_link_port_channel_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">            </span><span class="nt">leaf_leaf_link_port_channel_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">            </span><span class="nt">logical_device</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cicd_test&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">leaf_leaf_link_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">        </span><span class="nt">logical_devices</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AOS-1x10-1</span><span class="w"></span>
+<span class="w">            </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AOS-1x10-1</span><span class="w"></span>
+<span class="w">            </span><span class="nt">panels</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">panel_layout</span><span class="p">:</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">row_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">column_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                </span><span class="nt">port_indexing</span><span class="p">:</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">order</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">T-B, L-R</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">start_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">absolute</span><span class="w"></span>
+<span class="w">                </span><span class="nt">port_groups</span><span class="p">:</span><span class="w"></span>
+<span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">speed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">G</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">                        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">leaf</span><span class="w"></span>
+<span class="w">                        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">access</span><span class="w">    </span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">vqfx_leaf</span><span class="w"></span>
+<span class="w">            </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cicd_test&quot;</span><span class="w"></span>
+<span class="w">            </span><span class="nt">panels</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">panel_layout</span><span class="p">:</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">row_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">column_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">12</span><span class="w"></span>
+<span class="w">                </span><span class="nt">port_indexing</span><span class="p">:</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">order</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">T-B, L-R</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">start_index</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">absolute</span><span class="w"></span>
+<span class="w">                </span><span class="nt">port_groups</span><span class="p">:</span><span class="w"></span>
+<span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">speed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">G</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">                        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spine</span><span class="w"></span>
+<span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">7</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">speed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">G</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">                        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">l2_server</span><span class="w"></span>
+<span class="w">                        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">access</span><span class="w"></span>
+<span class="w">                        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">l3_server</span><span class="w"></span>
+<span class="w">                  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">speed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">G</span><span class="w"></span>
+<span class="w">                        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">roles</span><span class="p">:</span><span class="w"></span>
+<span class="w">                        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">external_router</span><span class="w">    </span>
+<span class="w">        </span><span class="nt">servers</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">            </span><span class="nt">ip_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ipv4</span><span class="w"></span>
+<span class="w">            </span><span class="nt">port_channel_id_min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">            </span><span class="nt">port_channel_id_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w"></span>
+<span class="w">            </span><span class="nt">connectivity_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">l2</span><span class="w"></span>
+<span class="w">            </span><span class="nt">links</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">link_per_switch_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w"></span>
+<span class="w">                </span><span class="nt">link_speed</span><span class="p">:</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">unit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">G</span><span class="w"></span>
+<span class="w">                    </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w"></span>
+<span class="w">                </span><span class="nt">target_switch_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test</span><span class="w"></span>
+<span class="w">                </span><span class="nt">lag_mode</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">leaf_peer</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">attachment_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">singleAttached</span><span class="w"></span>
+<span class="w">                </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test</span><span class="w"></span>
+<span class="w">            </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test</span><span class="w"></span>
+<span class="w">            </span><span class="nt">logical_device</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">AOS-1x10-1</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># state whether you want to create or delete this resource</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># store the output of our task as a new variable to debug later</span><span class="w"></span>
+<span class="w">        </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test_rack_type</span><span class="w"></span>
+</code></pre></div>
 <h2 id="data-model">Data Model<a class="headerlink" href="#data-model" title="Permanent link">#</a></h2>
 <p>If you&rsquo;d like to see the options available for you within the module, have a look at the data model provided below.</p>
-<p><code>py title="cdot65/apstra/plugins/module_utils/apstra/api.py"
-@staticmethod
-def design_spec():
-    return dict(
-        access_switches=dict(
-            required=False,
-            type='list',
-            elements='str'
-        ),
-        api_token=dict(
-            required=True,
-            fallback=(
-                env_fallback, [
-                    'APSTRA_API_TOKEN',
-                    'APSTRA_API_TOKEN',
-                    'API_TOKEN'
-                ]
-            ),
-            no_log=True,
-            type='str'
-        ),
-        description=dict(
-            required=False,
-            type='str'
-        ),
-        device_profile_id=dict(
-            required=False,
-            type='str'
-        ),
-        display_name=dict(
-            required=True,
-            fallback=(
-                env_fallback, [
-                    'APSTRA_USERNAME',
-                    'APSTRA_USERNAME',
-                    'USERNAME'
-                ]
-            ),
-            type='str'
-        ),
-        id=dict(
-            required=False,
-            type='str'
-        ),
-        interfaces=dict(
-            required=False,
-            type='list',
-            elements='dict',
-            options=dict(
-                mapping=dict(
-                    required=True,
-                    type='list',
-                    elements='int'
-                ),
-                name=dict(
-                    required=True,
-                    type='str',
-                ),
-                position=dict(
-                    required=True,
-                    type='int',
-                ),
-                roles=dict(
-                    required=True,
-                    type='list',
-                    elements='str'
-                ),
-                setting=dict(
-                    required=True,
-                    type='dict',
-                    options=dict(
-                        param=dict(
-                            required=False,
-                            type='str'
-                        ),
-                    )
-                ),
-                speed=dict(
-                    required=True,
-                    type='dict',
-                    options=dict(
-                        unit=dict(
-                            required=False,
-                            type='str'
-                        ),
-                        value=dict(
-                            required=False,
-                            type='int'
-                        ),
-                    )
-                ),
-                state=dict(
-                    required=True,
-                    type='str',
-                ),
-            ),
-        ),
-        label=dict(
-            required=False,
-            type='str'
-        ),
-        leafs=dict(
-            required=False,
-            type='list',
-            elements='dict',
-            options=dict(
-                external_router_facing=dict(
-                    required=True,
-                    type='bool',
-                ),
-                external_router_links=dict(
-                    required=True,
-                    type='list',
-                    elements='str'
-                ),
-                label=dict(
-                    required=False,
-                    type='str',
-                ),
-                leaf_leaf_l3_link_count=dict(
-                    required=False,
-                    type='int',
-                ),
-                leaf_leaf_l3_link_port_channel_id=dict(
-                    required=False,
-                    type='int',
-                ),
-                leaf_leaf_l3_link_speed=dict(
-                    required=False,
-                    type='str',
-                ),
-                leaf_leaf_link_count=dict(
-                    required=False,
-                    type='int',
-                ),
-                leaf_leaf_link_port_channel_id=dict(
-                    required=False,
-                    type='int',
-                ),
-                leaf_leaf_link_speed=dict(
-                    required=False,
-                    type='str',
-                ),
-                link_per_spine_count=dict(
-                    required=False,
-                    type='int',
-                ),
-                link_per_spine_speed=dict(
-                    required=True,
-                    type='dict',
-                    options=dict(
-                        unit=dict(
-                            required=False,
-                            type='str'
-                        ),
-                        value=dict(
-                            required=False,
-                            type='int'
-                        )
-                    )
-                ),
-                logical_device=dict(
-                    required=False,
-                    type='str',
-                ),
-                redundancy_protocol=dict(
-                    required=False,
-                    type='str',
-                ),
-            ),
-        ),
-        logical_devices=dict(
-            required=False,
-            type='list',
-            elements='dict',
-            options=dict(
-                display_name=dict(
-                    required=True,
-                    type='str',
-                ),
-                id=dict(
-                    required=True,
-                    type='str',
-                ),
-                panels=dict(
-                    required=False,
-                    type='list',
-                    elements='dict',
-                    options=dict(
-                        panel_layout=dict(
-                            required=True,
-                            type='dict',
-                            options=dict(
-                                row_count=dict(
-                                    required=False,
-                                    type='int'
-                                ),
-                                column_count=dict(
-                                    required=False,
-                                    type='int'
-                                ),
-                            )
-                        ),
-                        port_indexing=dict(
-                            required=True,
-                            type='dict',
-                            options=dict(
-                                order=dict(
-                                    required=False,
-                                    type='str'
-                                ),
-                                start_index=dict(
-                                    required=False,
-                                    type='int'
-                                ),
-                                schema=dict(
-                                    required=False,
-                                    type='str'
-                                ),
-                            )
-                        ),
-                        port_groups=dict(
-                            required=False,
-                            type='list',
-                            elements='dict',
-                            options=dict(
-                                count=dict(
-                                    required=False,
-                                    type='int'
-                                ),
-                                roles=dict(
-                                    required=False,
-                                    type='list',
-                                    elements='str'
-                                ),
-                                speed=dict(
-                                    required=True,
-                                    type='dict',
-                                    options=dict(
-                                        unit=dict(
-                                            required=False,
-                                            type='str'
-                                        ),
-                                        value=dict(
-                                            required=False,
-                                            type='int'
-                                        ),
-                                    )
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        logical_device_id=dict(
-            required=False,
-            type='str'
-        ),
-        name=dict(
-            required=False,
-            type='str'
-        ),
-        panels=dict(
-            required=False,
-            type='list',
-            elements='dict',
-            options=dict(
-                panel_layout=dict(
-                    required=True,
-                    type='dict',
-                    options=dict(
-                        row_count=dict(
-                            required=False,
-                            type='int'
-                        ),
-                        column_count=dict(
-                            required=False,
-                            type='int'
-                        ),
-                    )
-                ),
-                port_indexing=dict(
-                    required=True,
-                    type='dict',
-                    options=dict(
-                        order=dict(
-                            required=False,
-                            type='str'
-                        ),
-                        schema=dict(
-                            required=False,
-                            type='str'
-                        ),
-                        start_index=dict(
-                            required=False,
-                            type='int'
-                        ),
-                    ),
-                ),
-                port_groups=dict(
-                    required=True,
-                    type='list',
-                    elements='dict',
-                    options=dict(
-                        count=dict(
-                            required=False,
-                            type='int'
-                        ),
-                        roles=dict(
-                            required=False,
-                            type='list',
-                            elements='str'
-                        ),
-                        speed=dict(
-                            required=False,
-                            type='dict',
-                            options=dict(
-                                value=dict(
-                                    required=False,
-                                    type='int'
-                                ),
-                                unit=dict(
-                                    required=False,
-                                    type='str'
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        port=dict(
-            required=False,
-            type='int'
-        ),
-        server=dict(
-            required=False,
-            type='str'
-        ),
-        servers=dict(
-            required=False,
-            type='list',
-            elements='dict',
-            options=dict(
-                connectivity_type=dict(
-                    required=True,
-                    type='str',
-                ),
-                count=dict(
-                    required=True,
-                    type='int',
-                ),
-                label=dict(
-                    required=True,
-                    type='str',
-                ),
-                logical_device=dict(
-                    required=True,
-                    type='str',
-                ),
-                ip_version=dict(
-                    required=True,
-                    type='str',
-                ),
-                port_channel_id_min=dict(
-                    required=True,
-                    type='int',
-                ),
-                port_channel_id_max=dict(
-                    required=True,
-                    type='int',
-                ),
-                links=dict(
-                    required=False,
-                    type='list',
-                    elements='dict',
-                    options=dict(
-                        attachment_type=dict(
-                            required=False,
-                            type='str'
-                        ),
-                        label=dict(
-                            required=False,
-                            type='str'
-                        ),
-                        lag_mode=dict(
-                            required=False,
-                            type='str'
-                        ),
-                        leaf_peer=dict(
-                            required=False,
-                            type='str'
-                        ),
-                        link_per_switch_count=dict(
-                            required=False,
-                            type='int'
-                        ),
-                        link_speed=dict(
-                            required=True,
-                            type='dict',
-                            options=dict(
-                                unit=dict(
-                                    required=False,
-                                    type='str'
-                                ),
-                                value=dict(
-                                    required=False,
-                                    type='int'
-                                ),
-                            )
-                        ),
-                        target_switch_label=dict(
-                            required=False,
-                            type='str'
-                        ),
-                    ),
-                ),
-            ),
-        ),
-        state=dict(
-            required=True,
-            choices=[
-                'absent',
-                'present'
-            ],
-            type='str'
-        ),
-        design_template=dict(
-            required=False,
-            type='dict',
-            options=dict(
-                asn_allocation_policy=dict(
-                    required=False,
-                    type='dict',
-                    options=dict(
-                        spine_asn_scheme=dict(
-                            required=False,
-                            type='str'
-                        )
-                    )
-                ),
-                dhcp_service_intent=dict(
-                    required=False,
-                    type='dict',
-                    options=dict(
-                        active=dict(
-                            required=False,
-                            type='bool'
-                        )
-                    )
-                ),
-                display_name=dict(
-                    required=True,
-                    type='str'
-                ),
-                external_routing_policy=dict(
-                    required=False,
-                    type='dict',
-                    options=dict(
-                        export_policy=dict(
-                            required=False,
-                            type='dict',
-                            options=dict(
-                                all_routes=dict(
-                                    required=False,
-                                    type='bool'
-                                ),
-                                l2edge_subnets=dict(
-                                    required=False,
-                                    type='bool'
-                                ),
-                                l3edge_server_links=dict(
-                                    required=False,
-                                    type='bool'
-                                ),
-                                loopbacks=dict(
-                                    required=False,
-                                    type='bool'
-                                ),
-                                spine_leaf_links=dict(
-                                    required=False,
-                                    type='bool'
-                                ),
-                            )
-                        ),
-                        import_policy=dict(
-                            required=False,
-                            type='str'
-                        )
-                    )
-                ),
-                fabric_addressing_policy=dict(
-                    required=False,
-                    type='dict',
-                    options=dict(
-                        spine_leaf_links=dict(
-                            required=False,
-                            type='str'
-                        )
-                    )
-                ),
-                rack_type_counts=dict(
-                    required=False,
-                    type='list',
-                    elements='dict',
-                    options=dict(
-                        count=dict(
-                            required=False,
-                            type='int'
-                        ),
-                        rack_type_id=dict(
-                            required=False,
-                            type='str'
-                        ),
-                    )
-                ),
-                rack_types=dict(
-                    required=False,
-                    type='list',
-                    elements='dict',
-                    options=dict(
-                        access_switches=dict(
-                            required=False,
-                            type='list',
-                            elements='str'
-                        ),
-                        description=dict(
-                            required=False,
-                            type='str'
-                        ),
-                        display_name=dict(
-                            required=False,
-                            type='str'
-                        ),
-                        id=dict(
-                            required=False,
-                            type='str'
-                        ),
-                        leafs=dict(
-                            required=False,
-                            type='list',
-                            elements='dict',
-                            options=dict(
-                                external_router_facing=dict(
-                                    required=False,
-                                    type='bool'
-                                ),
-                                external_router_links=dict(
-                                    required=False,
-                                    type='list',
-                                    elements='str'
-                                ),
-                                label=dict(
-                                    required=False,
-                                    type='str'
-                                ),
-                                leaf_leaf_l3_link_count=dict(
-                                    required=False,
-                                    type='int'
-                                ),
-                                leaf_leaf_l3_link_port_channel_id=dict(
-                                    required=False,
-                                    type='int'
-                                ),
-                                leaf_leaf_l3_link_speed=dict(
-                                    required=False,
-                                    type='str'
-                                ),
-                                leaf_leaf_link_count=dict(
-                                    required=False,
-                                    type='int'
-                                ),
-                                leaf_leaf_link_port_channel_id=dict(
-                                    required=False,
-                                    type='int'
-                                ),
-                                leaf_leaf_link_speed=dict(
-                                    required=False,
-                                    type='str'
-                                ),
-                                link_per_spine_count=dict(
-                                    required=False,
-                                    type='int'
-                                ),
-                                link_per_spine_speed=dict(
-                                    required=False,
-                                    type='dict',
-                                    options=dict(
-                                        unit=dict(
-                                            type='str',
-                                            required=False
-                                        ),
-                                        value=dict(
-                                            type='int',
-                                            required=False
-                                        )
-                                    )
-                                ),
-                                logical_device=dict(
-                                    required=True,
-                                    type='str'
-                                ),
-                                redundancy_protocol=dict(
-                                    required=False,
-                                    type='str'
-                                ),
-                            )
-                        ),
-                        logical_devices=dict(
-                            required=False,
-                            type='list',
-                            elements='dict',
-                            options=dict(
-                                display_name=dict(
-                                    required=True,
-                                    type='str'
-                                ),
-                                id=dict(
-                                    required=True,
-                                    type='str'
-                                ),
-                                panels=dict(
-                                    required=False,
-                                    type='list',
-                                    elements='dict',
-                                    options=dict(
-                                        panel_layout=dict(
-                                            required=False,
-                                            type='dict',
-                                            options=dict(
-                                                column_count=dict(
-                                                    required=False,
-                                                    type='int'
-                                                ),
-                                                row_count=dict(
-                                                    required=False,
-                                                    type='int'
-                                                )
-                                            )
-                                        ),
-                                        port_groups=dict(
-                                            required=False,
-                                            type='list',
-                                            elements='dict',
-                                            options=dict(
-                                                count=dict(
-                                                    required=False,
-                                                    type='int'
-                                                ),
-                                                roles=dict(
-                                                    required=False,
-                                                    type='list',
-                                                    elements='str'
-                                                ),
-                                                speed=dict(
-                                                    required=False,
-                                                    type='dict',
-                                                    options=dict(
-                                                        unit=dict(
-                                                            required=False,
-                                                            type='str'
-                                                        ),
-                                                        value=dict(
-                                                            required=False,
-                                                            type='int'
-                                                        ),
-                                                    )
-                                                ),
-                                            )
-                                        ),
-                                        port_indexing=dict(
-                                            required=True,
-                                            type='dict',
-                                            options=dict(
-                                                order=dict(
-                                                    required=True,
-                                                    type='str'
-                                                ),
-                                                schema=dict(
-                                                    required=True,
-                                                    type='str'
-                                                ),
-                                                start_index=dict(
-                                                    required=True,
-                                                    type='int'
-                                                ),
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        ),
-                        servers=dict(
-                            required=True,
-                            type='list',
-                            elements='dict',
-                            options=dict(
-                                connectivity_type=dict(
-                                    type='str',
-                                    required=True
-                                ),
-                                count=dict(
-                                    type='int',
-                                    required=True
-                                ),
-                                ip_version=dict(
-                                    type='str',
-                                    required=True
-                                ),
-                                label=dict(
-                                    type='str',
-                                    required=True
-                                ),
-                                links=dict(
-                                    required=True,
-                                    type='list',
-                                    elements='dict',
-                                    options=dict(
-                                        attachment_type=dict(
-                                            type='str',
-                                            required=True
-                                        ),
-                                        label=dict(
-                                            type='str',
-                                            required=True
-                                        ),
-                                        lag_mode=dict(
-                                            type='str',
-                                            required=False
-                                        ),
-                                        link_per_switch_count=dict(
-                                            type='int',
-                                            required=False
-                                        ),
-                                        link_speed=dict(
-                                            required=True,
-                                            type='dict',
-                                            options=dict(
-                                                unit=dict(
-                                                    type='str',
-                                                    required=False
-                                                ),
-                                                value=dict(
-                                                    type='int',
-                                                    required=False
-                                                )
-                                            )
-                                        ),
-                                        target_switch_label=dict(
-                                            type='str',
-                                            required=True
-                                        )
-                                    )
-                                ),
-                                logical_device=dict(
-                                    type='str',
-                                    required=True
-                                ),
-                                port_channel_id_max=dict(
-                                    type='int',
-                                    required=False
-                                ),
-                                port_channel_id_min=dict(
-                                    type='int',
-                                    required=False
-                                )
-                            )
-                        )
-                    )
-                ),
-                spine=dict(
-                    required=True,
-                    type='dict',
-                    options=dict(
-                        count=dict(
-                            required=True,
-                            type='int'
-                        ),
-                        external_link_count=dict(
-                            required=True,
-                            type='int'
-                        ),
-                        external_link_speed=dict(
-                            required=True,
-                            type='str'
-                        ),
-                        link_per_superspine_count=dict(
-                            required=True,
-                            type='int'
-                        ),
-                        link_per_superspine_speed=dict(
-                            required=True,
-                            type='str'
-                        ),
-                        logical_device=dict(
-                            required=True,
-                            type='dict',
-                            options=dict(
-                                display_name=dict(
-                                    required=True,
-                                    type='str'
-                                ),
-                                id=dict(
-                                    required=True,
-                                    type='str'
-                                ),
-                                panels=dict(
-                                    required=False,
-                                    type='list',
-                                    elements='dict',
-                                    options=dict(
-                                        panel_layout=dict(
-                                            required=False,
-                                            type='dict',
-                                            options=dict(
-                                                column_count=dict(
-                                                    required=False,
-                                                    type='int'
-                                                ),
-                                                row_count=dict(
-                                                    required=False,
-                                                    type='int'
-                                                )
-                                            )
-                                        ),
-                                        port_groups=dict(
-                                            required=False,
-                                            type='list',
-                                            elements='dict',
-                                            options=dict(
-                                                count=dict(
-                                                    required=False,
-                                                    type='int'
-                                                ),
-                                                roles=dict(
-                                                    required=False,
-                                                    type='list',
-                                                    elements='str'
-                                                ),
-                                                speed=dict(
-                                                    required=False,
-                                                    type='dict',
-                                                    options=dict(
-                                                        unit=dict(
-                                                            required=False,
-                                                            type='str'
-                                                        ),
-                                                        value=dict(
-                                                            required=False,
-                                                            type='int'
-                                                        )
-                                                    )
-                                                )
-                                            )
-                                        ),
-                                        port_indexing=dict(
-                                            required=False,
-                                            type='dict',
-                                            options=dict(
-                                                order=dict(
-                                                    type='str',
-                                                    required=False
-                                                ),
-                                                schema=dict(
-                                                    type='str',
-                                                    required=False
-                                                ),
-                                                start_index=dict(
-                                                    type='int',
-                                                    required=False
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        )
-                    )
-                ),
-                type=dict(
-                    required=True,
-                    type='str'
-                ),
-                virtual_network_policy=dict(
-                    required=True,
-                    type='dict',
-                    options=dict(
-                        overlay_control_protocol=dict(
-                            required=True,
-                            type='str'
-                        )
-                    )
-                )
-            )
-        ),
-        type=dict(
-            required=True,
-            choices=[
-                'logical-devices',
-                'interface-maps',
-                'rack-types',
-                'templates'
-            ],
-            type='str'
-        ),
-        validate_certs=dict(
-            type='bool',
-            required=False,
-            default=False
-        ),
-    )</code></p>
+<div class="highlight"><span class="filename">cdot65/apstra/plugins/module_utils/apstra/api.py</span><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span> <span class="nf">design_spec</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">access_switches</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">api_token</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">fallback</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">env_fallback</span><span class="p">,</span> <span class="p">[</span>
+                    <span class="s1">&#39;APSTRA_API_TOKEN&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;APSTRA_API_TOKEN&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;API_TOKEN&#39;</span>
+                <span class="p">]</span>
+            <span class="p">),</span>
+            <span class="n">no_log</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">description</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">device_profile_id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">display_name</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">fallback</span><span class="o">=</span><span class="p">(</span>
+                <span class="n">env_fallback</span><span class="p">,</span> <span class="p">[</span>
+                    <span class="s1">&#39;APSTRA_USERNAME&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;APSTRA_USERNAME&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;USERNAME&#39;</span>
+                <span class="p">]</span>
+            <span class="p">),</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="nb">id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">interfaces</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">mapping</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                <span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">position</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">roles</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                <span class="p">),</span>
+                <span class="n">setting</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">param</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">unit</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">value</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">state</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">label</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">leafs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">external_router_facing</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">external_router_links</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                <span class="p">),</span>
+                <span class="n">label</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">leaf_leaf_l3_link_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">leaf_leaf_l3_link_port_channel_id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">leaf_leaf_l3_link_speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">leaf_leaf_link_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">leaf_leaf_link_port_channel_id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">leaf_leaf_link_speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">link_per_spine_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">link_per_spine_speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">unit</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">value</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">logical_device</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">redundancy_protocol</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">logical_devices</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">display_name</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="nb">id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">panels</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">panel_layout</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                <span class="n">row_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">column_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                <span class="p">),</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="n">port_indexing</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                <span class="n">order</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">start_index</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">schema</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="n">port_groups</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                <span class="n">count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">roles</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                        <span class="n">unit</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                        <span class="p">),</span>
+                                        <span class="n">value</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                        <span class="p">),</span>
+                                    <span class="p">)</span>
+                                <span class="p">),</span>
+                            <span class="p">),</span>
+                        <span class="p">),</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">logical_device_id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">name</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">panels</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">panel_layout</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">row_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">column_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">port_indexing</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">order</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">schema</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">start_index</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                        <span class="p">),</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+                <span class="n">port_groups</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">roles</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                <span class="n">value</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">unit</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                            <span class="p">),</span>
+                        <span class="p">),</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">port</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+        <span class="p">),</span>
+        <span class="n">server</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">servers</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">connectivity_type</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">label</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">logical_device</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">ip_version</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">port_channel_id_min</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">port_channel_id_max</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+                <span class="n">links</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">attachment_type</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">label</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">lag_mode</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">leaf_peer</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">link_per_switch_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">link_speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                <span class="n">unit</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">value</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                <span class="p">),</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="n">target_switch_label</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">state</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">choices</span><span class="o">=</span><span class="p">[</span>
+                <span class="s1">&#39;absent&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;present&#39;</span>
+            <span class="p">],</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">design_template</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">asn_allocation_policy</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">spine_asn_scheme</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">dhcp_service_intent</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">active</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">display_name</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                <span class="p">),</span>
+                <span class="n">external_routing_policy</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">export_policy</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                <span class="n">all_routes</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">l2edge_subnets</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">l3edge_server_links</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">loopbacks</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">spine_leaf_links</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span>
+                                <span class="p">),</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="n">import_policy</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">fabric_addressing_policy</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">spine_leaf_links</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">rack_type_counts</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">rack_type_id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">rack_types</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">access_switches</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">description</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">display_name</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="nb">id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">leafs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                <span class="n">external_router_facing</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">external_router_links</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">label</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">leaf_leaf_l3_link_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">leaf_leaf_l3_link_port_channel_id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">leaf_leaf_l3_link_speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">leaf_leaf_link_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">leaf_leaf_link_port_channel_id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">leaf_leaf_link_speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">link_per_spine_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">link_per_spine_speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                        <span class="n">unit</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span>
+                                        <span class="p">),</span>
+                                        <span class="n">value</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span>
+                                        <span class="p">)</span>
+                                    <span class="p">)</span>
+                                <span class="p">),</span>
+                                <span class="n">logical_device</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">redundancy_protocol</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="n">logical_devices</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                <span class="n">display_name</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="nb">id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">panels</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                        <span class="n">panel_layout</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                <span class="n">column_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                                <span class="p">),</span>
+                                                <span class="n">row_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                                <span class="p">)</span>
+                                            <span class="p">)</span>
+                                        <span class="p">),</span>
+                                        <span class="n">port_groups</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                                            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                <span class="n">count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                                <span class="p">),</span>
+                                                <span class="n">roles</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                                                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                                <span class="p">),</span>
+                                                <span class="n">speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                        <span class="n">unit</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                                        <span class="p">),</span>
+                                                        <span class="n">value</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                                        <span class="p">),</span>
+                                                    <span class="p">)</span>
+                                                <span class="p">),</span>
+                                            <span class="p">)</span>
+                                        <span class="p">),</span>
+                                        <span class="n">port_indexing</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                <span class="n">order</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                                <span class="p">),</span>
+                                                <span class="n">schema</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                                <span class="p">),</span>
+                                                <span class="n">start_index</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                                <span class="p">),</span>
+                                            <span class="p">)</span>
+                                        <span class="p">)</span>
+                                    <span class="p">)</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">),</span>
+                        <span class="n">servers</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                <span class="n">connectivity_type</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span>
+                                <span class="p">),</span>
+                                <span class="n">count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span>
+                                <span class="p">),</span>
+                                <span class="n">ip_version</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span>
+                                <span class="p">),</span>
+                                <span class="n">label</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span>
+                                <span class="p">),</span>
+                                <span class="n">links</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                        <span class="n">attachment_type</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span>
+                                        <span class="p">),</span>
+                                        <span class="n">label</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span>
+                                        <span class="p">),</span>
+                                        <span class="n">lag_mode</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span>
+                                        <span class="p">),</span>
+                                        <span class="n">link_per_switch_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span>
+                                        <span class="p">),</span>
+                                        <span class="n">link_speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                <span class="n">unit</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span>
+                                                <span class="p">),</span>
+                                                <span class="n">value</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span>
+                                                <span class="p">)</span>
+                                            <span class="p">)</span>
+                                        <span class="p">),</span>
+                                        <span class="n">target_switch_label</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span>
+                                        <span class="p">)</span>
+                                    <span class="p">)</span>
+                                <span class="p">),</span>
+                                <span class="n">logical_device</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span>
+                                <span class="p">),</span>
+                                <span class="n">port_channel_id_max</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span>
+                                <span class="p">),</span>
+                                <span class="n">port_channel_id_min</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="n">spine</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">external_link_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">external_link_speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">link_per_superspine_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">link_per_superspine_speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">),</span>
+                        <span class="n">logical_device</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                <span class="n">display_name</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="nb">id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                <span class="p">),</span>
+                                <span class="n">panels</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                        <span class="n">panel_layout</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                <span class="n">column_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                                <span class="p">),</span>
+                                                <span class="n">row_count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                                <span class="p">)</span>
+                                            <span class="p">)</span>
+                                        <span class="p">),</span>
+                                        <span class="n">port_groups</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                                            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                <span class="n">count</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                                <span class="p">),</span>
+                                                <span class="n">roles</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+                                                    <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                                <span class="p">),</span>
+                                                <span class="n">speed</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                        <span class="n">unit</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                                                        <span class="p">),</span>
+                                                        <span class="n">value</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+                                                        <span class="p">)</span>
+                                                    <span class="p">)</span>
+                                                <span class="p">)</span>
+                                            <span class="p">)</span>
+                                        <span class="p">),</span>
+                                        <span class="n">port_indexing</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                                            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                <span class="n">order</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span>
+                                                <span class="p">),</span>
+                                                <span class="n">schema</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">,</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span>
+                                                <span class="p">),</span>
+                                                <span class="n">start_index</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                                                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">,</span>
+                                                    <span class="n">required</span><span class="o">=</span><span class="kc">False</span>
+                                                <span class="p">)</span>
+                                            <span class="p">)</span>
+                                        <span class="p">)</span>
+                                    <span class="p">)</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">),</span>
+                <span class="nb">type</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                <span class="p">),</span>
+                <span class="n">virtual_network_policy</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+                    <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                        <span class="n">overlay_control_protocol</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">choices</span><span class="o">=</span><span class="p">[</span>
+                <span class="s1">&#39;logical-devices&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;interface-maps&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rack-types&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;templates&#39;</span>
+            <span class="p">],</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">validate_certs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+</code></pre></div>
 <p><em>This page is automatically generated</em></p>
 
               

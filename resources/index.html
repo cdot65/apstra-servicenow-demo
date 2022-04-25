@@ -347,57 +347,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#yaml-titlecdot65apstrateststestsyaml" class="md-nav__link">
-    ``` yaml title="cdot65/apstra/tests/tests.yaml"
+  <a href="#data-model" class="md-nav__link">
+    Data Model
   </a>
-  
-    <nav class="md-nav" aria-label="``` yaml title="cdot65/apstra/tests/tests.yaml"">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-resources-play" class="md-nav__link">
-    # CREATE RESOURCES PLAY
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-ip-pool-resources-on-apstra-server" class="md-nav__link">
-    # CREATE IP POOL RESOURCES ON APSTRA SERVER
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -477,57 +429,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#yaml-titlecdot65apstrateststestsyaml" class="md-nav__link">
-    ``` yaml title="cdot65/apstra/tests/tests.yaml"
+  <a href="#data-model" class="md-nav__link">
+    Data Model
   </a>
-  
-    <nav class="md-nav" aria-label="``` yaml title="cdot65/apstra/tests/tests.yaml"">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-resources-play" class="md-nav__link">
-    # CREATE RESOURCES PLAY
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#create-ip-pool-resources-on-apstra-server" class="md-nav__link">
-    # CREATE IP POOL RESOURCES ON APSTRA SERVER
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -590,212 +494,203 @@
 </table>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h2>
 <p>Here is a basic example of using the module to mange your resources in Apstra</p>
-<h2 id="yaml-titlecdot65apstrateststestsyaml">``` yaml title=&rdquo;cdot65/apstra/tests/tests.yaml&rdquo;<a class="headerlink" href="#yaml-titlecdot65apstrateststestsyaml" title="Permanent link">#</a></h2>
-<h3 id="_1"><a class="headerlink" href="#_1" title="Permanent link">#</a></h3>
-<h3 id="create-resources-play"># CREATE RESOURCES PLAY<a class="headerlink" href="#create-resources-play" title="Permanent link">#</a></h3>
-<h3 id="_2"><a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
-<ul>
-<li>
-<p>hosts: localhost
-  gather_facts: False
-  become: False
-  tasks:
-    ### #################################################################
-    ### # AUTHENTICATE AND RECEIVE AN API TOKEN FROM THE APSTRA SERVER
-    ### #################################################################</p>
-<ul>
-<li>
-<p>name: retrieve an API token for our session
-  ansible.builtin.uri:
-    url: <a href="https://apstra.dmz.home/api/user/login">https://apstra.dmz.home/api/user/login</a>
-    method: POST
-    headers:
-      Content-Type: application/json
-    status_code: 201
-    validate_certs: False
-    body_format: json
-    body:
-      username: apstra
-      password: apstra123
-    register: api_token</p>
-</li>
-<li>
-<p>name: create &lsquo;api_token&rsquo; object by setting it equal to value in response
-  ansible.builtin.set_fact:
-    api_token: &ldquo;example123&rdquo;</p>
-</li>
-</ul>
-<h3 id="_3"><a class="headerlink" href="#_3" title="Permanent link">#</a></h3>
-<h3 id="create-ip-pool-resources-on-apstra-server"># CREATE IP POOL RESOURCES ON APSTRA SERVER<a class="headerlink" href="#create-ip-pool-resources-on-apstra-server" title="Permanent link">#</a></h3>
-<h3 id="_4"><a class="headerlink" href="#_4" title="Permanent link">#</a></h3>
-<ul>
-<li>
-<p>name: Create an IP Pool Resource with two prefixes
-  cdot65.apstra.resources:
-    # define server connectivity options
-    server: apstra.dmz.home
-    port: 443
-    validate_certs: False
-    api_token: &ldquo;example123&rdquo;</p>
-<h1 id="define-resource-allocations">define resource allocations<a class="headerlink" href="#define-resource-allocations" title="Permanent link">#</a></h1>
-<p>display_name: &ldquo;cicd_test&rdquo;
-tags: []
-type: &ldquo;ip-pools&rdquo;
-subnets:
-  - &ldquo;100.1.1.0/24&rdquo;
-  - &ldquo;100.1.2.0/24&rdquo;</p>
-<h1 id="state-whether-you-want-to-create-or-delete-this-resource">state whether you want to create or delete this resource<a class="headerlink" href="#state-whether-you-want-to-create-or-delete-this-resource" title="Permanent link">#</a></h1>
-<p>state: present</p>
-<h1 id="store-the-output-of-our-task-as-a-new-variable-to-debug-later">store the output of our task as a new variable to debug later<a class="headerlink" href="#store-the-output-of-our-task-as-a-new-variable-to-debug-later" title="Permanent link">#</a></h1>
-<p>register: cicd_test_ippool</p>
-</li>
-</ul>
-<h3 id="_5"><a class="headerlink" href="#_5" title="Permanent link">#</a></h3>
-<h3 id="create-ipv6-pool-resources-on-apstra-server"># CREATE IPv6 POOL RESOURCES ON APSTRA SERVER<a class="headerlink" href="#create-ipv6-pool-resources-on-apstra-server" title="Permanent link">#</a></h3>
-<h3 id="_6"><a class="headerlink" href="#_6" title="Permanent link">#</a></h3>
-<ul>
-<li>
-<p>name: Create an IPv6 Pool Resource with two prefixes
-  cdot65.apstra.resources:
-    # define server connectivity options
-    server: apstra.dmz.home
-    port: 443
-    validate_certs: False
-    api_token: &ldquo;example123&rdquo;</p>
-<h1 id="define-resource-allocations_1">define resource allocations<a class="headerlink" href="#define-resource-allocations_1" title="Permanent link">#</a></h1>
-<p>display_name: &ldquo;cicd_test&rdquo;
-tags: []
-type: &ldquo;ipv6-pools&rdquo;
-subnets:
-  - &ldquo;2001:db8::192:168:10:251/112&rdquo;
-  - &ldquo;2001:db8::192:168:20:251/112&rdquo;</p>
-<h1 id="state-whether-you-want-to-create-or-delete-this-resource_1">state whether you want to create or delete this resource<a class="headerlink" href="#state-whether-you-want-to-create-or-delete-this-resource_1" title="Permanent link">#</a></h1>
-<p>state: present</p>
-<h1 id="store-the-output-of-our-task-as-a-new-variable-to-debug-later_1">store the output of our task as a new variable to debug later<a class="headerlink" href="#store-the-output-of-our-task-as-a-new-variable-to-debug-later_1" title="Permanent link">#</a></h1>
-<p>register: cicd_test_ippool</p>
-</li>
-</ul>
-<h3 id="_7"><a class="headerlink" href="#_7" title="Permanent link">#</a></h3>
-<h3 id="create-asn-pool-resources-on-apstra-server"># CREATE ASN POOL RESOURCES ON APSTRA SERVER<a class="headerlink" href="#create-asn-pool-resources-on-apstra-server" title="Permanent link">#</a></h3>
-<h3 id="_8"><a class="headerlink" href="#_8" title="Permanent link">#</a></h3>
-<ul>
-<li>
-<p>name: Create an ASN Pool Resource with two ranges
-  cdot65.apstra.resources:
-    # define server connectivity options
-    server: apstra.dmz.home
-    port: 443
-    validate_certs: False
-    api_token: &ldquo;example123&rdquo;</p>
-<h1 id="define-resource-allocations_2">define resource allocations<a class="headerlink" href="#define-resource-allocations_2" title="Permanent link">#</a></h1>
-<p>display_name: &ldquo;cicd_test&rdquo;
-tags: []
-type: &ldquo;asn-pools&rdquo;
-ranges:
-  - first: 65300
-    last: 65399
-  - first: 65500
-    last: 65599</p>
-<h1 id="state-whether-you-want-to-create-or-delete-this-resource_2">state whether you want to create or delete this resource<a class="headerlink" href="#state-whether-you-want-to-create-or-delete-this-resource_2" title="Permanent link">#</a></h1>
-<p>state: present</p>
-<h1 id="store-the-output-of-our-task-as-a-new-variable-to-debug-later_2">store the output of our task as a new variable to debug later<a class="headerlink" href="#store-the-output-of-our-task-as-a-new-variable-to-debug-later_2" title="Permanent link">#</a></h1>
-<p>register: cicd_test_asn_pool</p>
-</li>
-</ul>
-<h3 id="_9"><a class="headerlink" href="#_9" title="Permanent link">#</a></h3>
-<h3 id="create-vni-pool-resources-on-apstra-server"># CREATE VNI POOL RESOURCES ON APSTRA SERVER<a class="headerlink" href="#create-vni-pool-resources-on-apstra-server" title="Permanent link">#</a></h3>
-<h3 id="_10"><a class="headerlink" href="#_10" title="Permanent link">#</a></h3>
-<ul>
-<li>
-<p>name: Create an VNI Pool Resource with two ranges
-  cdot65.apstra.resources:
-    # define server connectivity options
-    server: apstra.dmz.home
-    port: 443
-    validate_certs: False
-    api_token: &ldquo;example123&rdquo;</p>
-<h1 id="define-resource-allocations_3">define resource allocations<a class="headerlink" href="#define-resource-allocations_3" title="Permanent link">#</a></h1>
-<p>display_name: &ldquo;cicd_test&rdquo;
-tags: []
-type: &ldquo;vni-pools&rdquo;
-ranges:
-  - first: 65300
-    last: 65399
-  - first: 65500
-    last: 65599</p>
-<h1 id="state-whether-you-want-to-create-or-delete-this-resource_3">state whether you want to create or delete this resource<a class="headerlink" href="#state-whether-you-want-to-create-or-delete-this-resource_3" title="Permanent link">#</a></h1>
-<p>state: present</p>
-<h1 id="store-the-output-of-our-task-as-a-new-variable-to-debug-later_3">store the output of our task as a new variable to debug later<a class="headerlink" href="#store-the-output-of-our-task-as-a-new-variable-to-debug-later_3" title="Permanent link">#</a></h1>
-<p>register: cicd_test_vni_pool
-```</p>
-</li>
-</ul>
-</li>
-</ul>
+<div class="highlight"><span class="filename">cdot65/apstra/tests/tests.yaml</span><pre><span></span><code><span class="nn">---</span><span class="w"></span>
+<span class="c1">### #################################################################</span><span class="w"></span>
+<span class="c1">### # CREATE RESOURCES PLAY</span><span class="w"></span>
+<span class="c1">### #################################################################</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">localhost</span><span class="w"></span>
+<span class="w">  </span><span class="nt">gather_facts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">  </span><span class="nt">become</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### # AUTHENTICATE AND RECEIVE AN API TOKEN FROM THE APSTRA SERVER</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">retrieve an API token for our session</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.uri</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://apstra.dmz.home/api/user/login</span><span class="w"></span>
+<span class="w">        </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">POST</span><span class="w"></span>
+<span class="w">        </span><span class="nt">headers</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">Content-Type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">application/json</span><span class="w"></span>
+<span class="w">        </span><span class="nt">status_code</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">201</span><span class="w"></span>
+<span class="w">        </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">        </span><span class="nt">body_format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span><span class="w"></span>
+<span class="w">        </span><span class="nt">body</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apstra</span><span class="w"></span>
+<span class="w">          </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apstra123</span><span class="w"></span>
+<span class="w">        </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">api_token</span><span class="w"></span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">create &#39;api_token&#39; object by setting it equal to value in response</span><span class="w"></span>
+<span class="w">      </span><span class="nt">ansible.builtin.set_fact</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example123&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### # CREATE IP POOL RESOURCES ON APSTRA SERVER</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create an IP Pool Resource with two prefixes</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cdot65.apstra.resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="c1"># define server connectivity options</span><span class="w"></span>
+<span class="w">        </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apstra.dmz.home</span><span class="w"></span>
+<span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span><span class="w"></span>
+<span class="w">        </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">        </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example123&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># define resource allocations</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cicd_test&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ip-pools&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">subnets</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;100.1.1.0/24&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;100.1.2.0/24&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># state whether you want to create or delete this resource</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># store the output of our task as a new variable to debug later</span><span class="w"></span>
+<span class="w">        </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test_ippool</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### # CREATE IPv6 POOL RESOURCES ON APSTRA SERVER</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create an IPv6 Pool Resource with two prefixes</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cdot65.apstra.resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="c1"># define server connectivity options</span><span class="w"></span>
+<span class="w">        </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apstra.dmz.home</span><span class="w"></span>
+<span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span><span class="w"></span>
+<span class="w">        </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">        </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example123&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># define resource allocations</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cicd_test&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ipv6-pools&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">subnets</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;2001:db8::192:168:10:251/112&quot;</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;2001:db8::192:168:20:251/112&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># state whether you want to create or delete this resource</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># store the output of our task as a new variable to debug later</span><span class="w"></span>
+<span class="w">        </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test_ippool</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### # CREATE ASN POOL RESOURCES ON APSTRA SERVER</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create an ASN Pool Resource with two ranges</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cdot65.apstra.resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="c1"># define server connectivity options</span><span class="w"></span>
+<span class="w">        </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apstra.dmz.home</span><span class="w"></span>
+<span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span><span class="w"></span>
+<span class="w">        </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">        </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example123&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># define resource allocations</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cicd_test&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;asn-pools&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">ranges</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">first</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">65300</span><span class="w"></span>
+<span class="w">            </span><span class="nt">last</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">65399</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">first</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">65500</span><span class="w"></span>
+<span class="w">            </span><span class="nt">last</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">65599</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># state whether you want to create or delete this resource</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># store the output of our task as a new variable to debug later</span><span class="w"></span>
+<span class="w">        </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test_asn_pool</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### # CREATE VNI POOL RESOURCES ON APSTRA SERVER</span><span class="w"></span>
+<span class="w">    </span><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create an VNI Pool Resource with two ranges</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cdot65.apstra.resources</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="c1"># define server connectivity options</span><span class="w"></span>
+<span class="w">        </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apstra.dmz.home</span><span class="w"></span>
+<span class="w">        </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">443</span><span class="w"></span>
+<span class="w">        </span><span class="nt">validate_certs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">False</span><span class="w"></span>
+<span class="w">        </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example123&quot;</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># define resource allocations</span><span class="w"></span>
+<span class="w">        </span><span class="nt">display_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cicd_test&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[]</span><span class="w"></span>
+<span class="w">        </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vni-pools&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">ranges</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">first</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">65300</span><span class="w"></span>
+<span class="w">            </span><span class="nt">last</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">65399</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">first</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">65500</span><span class="w"></span>
+<span class="w">            </span><span class="nt">last</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">65599</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># state whether you want to create or delete this resource</span><span class="w"></span>
+<span class="w">        </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span><span class="w"></span>
+
+<span class="w">        </span><span class="c1"># store the output of our task as a new variable to debug later</span><span class="w"></span>
+<span class="w">        </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cicd_test_vni_pool</span><span class="w"></span>
+</code></pre></div>
 <h2 id="data-model">Data Model<a class="headerlink" href="#data-model" title="Permanent link">#</a></h2>
 <p>If you&rsquo;d like to see the options available for you within the module, have a look at the data model provided below.</p>
-<p><code>py title="cdot65/apstra/plugins/module_utils/apstra/api.py"
-@staticmethod
-def resources_spec():
-    return dict(
-        address=dict(
-            required=False,
-            type='str'),
-        asn=dict(
-            required=False,
-            type='int'),
-        api_token=dict(
-            required=True,
-            fallback=(env_fallback, ['APSTRA_API_TOKEN', 'APSTRA_API_TOKEN', 'API_TOKEN']),
-            no_log=True,
-            type='str'),
-        display_name=dict(
-            required=True,
-            fallback=(env_fallback, ['APSTRA_USERNAME', 'APSTRA_USERNAME', 'USERNAME']),
-            type='str'),
-        ipv6_address=dict(
-            required=False,
-            type='str'),
-        port=dict(
-            required=True,
-            type='int'),
-        ranges=dict(
-            required=False,
-            type='list',
-            elements='dict',
-            options=dict(
-                first=dict(
-                    required=True,
-                    type='int'),
-                last=dict(
-                    required=True,
-                    type='int'),
-                ),
-            ),
-        server=dict(
-            required=False,
-            type='str'),
-        state=dict(
-            required=False,
-            choices=['absent', 'present'],
-            type='str'),
-        subnets=dict(
-            required=False,
-            type='list',
-            elements='str'),
-        tags=dict(
-            required=False,
-            type='list',
-            elements='str'),
-        type=dict(
-            required=True,
-            choices=['asn-pools', 'ip-pools', 'ipv6-pools', 'vni-pools'],
-            type='str'),
-        validate_certs=dict(
-            type='bool',
-            required=False,
-            default=False),
-    )</code></p>
+<div class="highlight"><span class="filename">cdot65/apstra/plugins/module_utils/apstra/api.py</span><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span> <span class="nf">resources_spec</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">address</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+        <span class="n">asn</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">),</span>
+        <span class="n">api_token</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">fallback</span><span class="o">=</span><span class="p">(</span><span class="n">env_fallback</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;APSTRA_API_TOKEN&#39;</span><span class="p">,</span> <span class="s1">&#39;APSTRA_API_TOKEN&#39;</span><span class="p">,</span> <span class="s1">&#39;API_TOKEN&#39;</span><span class="p">]),</span>
+            <span class="n">no_log</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+        <span class="n">display_name</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">fallback</span><span class="o">=</span><span class="p">(</span><span class="n">env_fallback</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;APSTRA_USERNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;APSTRA_USERNAME&#39;</span><span class="p">,</span> <span class="s1">&#39;USERNAME&#39;</span><span class="p">]),</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+        <span class="n">ipv6_address</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+        <span class="n">port</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">),</span>
+        <span class="n">ranges</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;dict&#39;</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="n">first</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">),</span>
+                <span class="n">last</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">),</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="n">server</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+        <span class="n">state</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;absent&#39;</span><span class="p">,</span> <span class="s1">&#39;present&#39;</span><span class="p">],</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+        <span class="n">subnets</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+        <span class="n">tags</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;list&#39;</span><span class="p">,</span>
+            <span class="n">elements</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;asn-pools&#39;</span><span class="p">,</span> <span class="s1">&#39;ip-pools&#39;</span><span class="p">,</span> <span class="s1">&#39;ipv6-pools&#39;</span><span class="p">,</span> <span class="s1">&#39;vni-pools&#39;</span><span class="p">],</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span><span class="p">),</span>
+        <span class="n">validate_certs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span>
+    <span class="p">)</span>
+</code></pre></div>
 <p><em>This page is automatically generated</em></p>
 
               

@@ -303,32 +303,12 @@
     Example
   </a>
   
-    <nav class="md-nav" aria-label="Example">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    
-  </a>
-  
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#create-a-blueprint" class="md-nav__link">
-    # CREATE A BLUEPRINT
+      
+        <li class="md-nav__item">
+  <a href="#data-model" class="md-nav__link">
+    Data Model
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -420,32 +400,12 @@
     Example
   </a>
   
-    <nav class="md-nav" aria-label="Example">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    
-  </a>
-  
 </li>
-        
-          <li class="md-nav__item">
-  <a href="#create-a-blueprint" class="md-nav__link">
-    # CREATE A BLUEPRINT
+      
+        <li class="md-nav__item">
+  <a href="#data-model" class="md-nav__link">
+    Data Model
   </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -479,75 +439,73 @@
 </ul>
 <h2 id="example">Example<a class="headerlink" href="#example" title="Permanent link">#</a></h2>
 <p>Here is a basic example of using the module to mange your resources in Apstra</p>
-<p>``` yaml title=&rdquo;cdot65/apstra/tests/tests.yaml&rdquo;</p>
-<h3 id="_1"><a class="headerlink" href="#_1" title="Permanent link">#</a></h3>
-<h3 id="create-a-blueprint"># CREATE A BLUEPRINT<a class="headerlink" href="#create-a-blueprint" title="Permanent link">#</a></h3>
-<h3 id="_2"><a class="headerlink" href="#_2" title="Permanent link">#</a></h3>
-<ul>
-<li>
-<p>name: &ldquo;### CREATE BLUEPRINT cicd_template&rdquo;
-  cdot65.apstra.blueprint:</p>
-<h1 id="define-apstra-server-parameters">define apstra server parameters<a class="headerlink" href="#define-apstra-server-parameters" title="Permanent link">#</a></h1>
-<p>server: &ldquo;apstra.dmz.home&rdquo;
-api_token: &ldquo;example123&rdquo;</p>
-<h1 id="define-request">define request<a class="headerlink" href="#define-request" title="Permanent link">#</a></h1>
-<p>design: &ldquo;two_stage_l3clos&rdquo;
-init_type: &ldquo;template_reference&rdquo;
-template_id: &ldquo;l3clos&rdquo;
-label: &ldquo;cicd_template&rdquo;</p>
-<h1 id="define-to-delete-or-create">define to delete or create<a class="headerlink" href="#define-to-delete-or-create" title="Permanent link">#</a></h1>
-<p>state: present
-  register: blueprint
-```</p>
-</li>
-</ul>
+<div class="highlight"><span class="filename">cdot65/apstra/tests/tests.yaml</span><pre><span></span><code><span class="c1">### #################################################################</span><span class="w"></span>
+<span class="c1">### # CREATE A BLUEPRINT</span><span class="w"></span>
+<span class="c1">### #################################################################</span><span class="w"></span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;###</span><span class="nv"> </span><span class="s">CREATE</span><span class="nv"> </span><span class="s">BLUEPRINT</span><span class="nv"> </span><span class="s">cicd_template&quot;</span><span class="w"></span>
+<span class="w">  </span><span class="nt">cdot65.apstra.blueprint</span><span class="p">:</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># define apstra server parameters</span><span class="w"></span>
+<span class="w">    </span><span class="nt">server</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;apstra.dmz.home&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">api_token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;example123&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># define request</span><span class="w"></span>
+<span class="w">    </span><span class="nt">design</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;two_stage_l3clos&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">init_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;template_reference&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">template_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;l3clos&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;cicd_template&quot;</span><span class="w"></span>
+
+<span class="w">    </span><span class="c1"># define to delete or create</span><span class="w"></span>
+<span class="w">    </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">present</span><span class="w"></span>
+<span class="w">  </span><span class="nt">register</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blueprint</span><span class="w"></span>
+</code></pre></div>
 <h2 id="data-model">Data Model<a class="headerlink" href="#data-model" title="Permanent link">#</a></h2>
 <p>If you&rsquo;d like to see the options available for you within the module, have a look at the data model provided below.</p>
-<p><code>py title="cdot65/apstra/plugins/module_utils/apstra/api.py"
-@staticmethod
-def blueprint_spec():
-    return dict(
-        api_token=dict(
-            required=True,
-            fallback=(env_fallback, ['APSTRA_API_TOKEN', 'APSTRA_API_TOKEN', 'API_TOKEN']),
-            no_log=True,
-            type='str'
-        ),
-        design=dict(
-            required=False,
-            type='str'
-        ),
-        init_type=dict(
-            required=False,
-            type='str'
-        ),
-        label=dict(
-            required=True,
-            type='str'
-        ),
-        template_id=dict(
-            required=False,
-            type='str'
-        ),
-        port=dict(
-            required=False,
-            type='int'
-        ),
-        server=dict(
-            required=False,
-            type='str'
-        ),
-        state=dict(
-            required=True,
-            choices=['absent', 'present'],
-            type='str'
-        ),
-        validate_certs=dict(
-            type='bool',
-            required=False,
-            default=False
-        ),
-    )</code></p>
+<div class="highlight"><span class="filename">cdot65/apstra/plugins/module_utils/apstra/api.py</span><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="k">def</span> <span class="nf">blueprint_spec</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">api_token</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">fallback</span><span class="o">=</span><span class="p">(</span><span class="n">env_fallback</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;APSTRA_API_TOKEN&#39;</span><span class="p">,</span> <span class="s1">&#39;APSTRA_API_TOKEN&#39;</span><span class="p">,</span> <span class="s1">&#39;API_TOKEN&#39;</span><span class="p">]),</span>
+            <span class="n">no_log</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">design</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">init_type</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">label</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">template_id</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">port</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;int&#39;</span>
+        <span class="p">),</span>
+        <span class="n">server</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">state</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;absent&#39;</span><span class="p">,</span> <span class="s1">&#39;present&#39;</span><span class="p">],</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;str&#39;</span>
+        <span class="p">),</span>
+        <span class="n">validate_certs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+            <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bool&#39;</span><span class="p">,</span>
+            <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="n">default</span><span class="o">=</span><span class="kc">False</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+</code></pre></div>
 <p><em>This page is automatically generated</em></p>
 
               
