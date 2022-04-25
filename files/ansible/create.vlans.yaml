@@ -90,7 +90,7 @@
     # #################################################
     - name: Cleanup VLAN name
       ansible.builtin.set_fact:
-        vlan_name: "{{ vlan_name | cleanup_vlan_name }}"
+        vlan_name_clean: "{{ vlan_name | cleanup_vlan_name }}"
 
     - name: "### Create VLAN"
       ansible.builtin.uri:
@@ -138,7 +138,7 @@
               rt_policy:
                 import_RTs: null
                 export_RTs: null
-              label: "{{ vlan_name }}"
+              label: "{{ vlan_name_clean }}"
               ipv4_enabled: true
               virtual_gateway_ipv6_enabled: false
               ipv6_enabled: false
