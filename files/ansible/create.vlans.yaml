@@ -86,8 +86,12 @@
         redundancy_group_id: "{{ redundancy_group.json | cleanup_redundancy_group }}"
 
     # #################################################
-    # ### CT WORK
+    # ### VLAN Work
     # #################################################
+    - name: Cleanup VLAN name
+      ansible.builtin.set_fact:
+        vlan_name: "{{ vlan_name | cleanup_vlan_name }}"
+
     - name: "### Create VLAN"
       ansible.builtin.uri:
         url: "https://{{ apstra.base_url }}/api/blueprints/{{ blueprint_name }}/virtual-networks-batch"

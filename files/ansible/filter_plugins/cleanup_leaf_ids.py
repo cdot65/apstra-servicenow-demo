@@ -1,8 +1,8 @@
-"""Filter plugin to cleanup blueprint health response."""
+"""Filter plugin to cleanup leaf IDs."""
 
 
 class FilterModule(object):
-    """Cleaning up blueprint health response."""
+    """Cleaning up leaf IDs response."""
 
     def filters(self):
         """Add our filter plugin to the list of built-in plugins."""
@@ -11,7 +11,12 @@ class FilterModule(object):
         }
 
     def cleanup_leaf_ids(self, leaf_system_ids):
-        """Filter out filler from the response of our blueprint health."""
+        """Filter out filler from the response of our leaf IDs.
+
+        Create an empty dictionary `leafs` and fill in spots for our three leafs.
+
+        Loop over returned leafs and fill in the goods.
+        """
         leafs = {}
 
         if isinstance(leaf_system_ids["items"], list):
