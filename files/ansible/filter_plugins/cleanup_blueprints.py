@@ -1,10 +1,10 @@
 class FilterModule(object):
     def filters(self):
         return {
-            "filter_blueprints": self.filter_blueprints,
+            "cleanup_blueprints": self.cleanup_blueprints,
         }
 
-    def filter_blueprints(self, output_blueprint_health, blueprint):
+    def cleanup_blueprints(self, output_blueprint_health, blueprint):
         filtered_blueprint = str()
 
         if isinstance(output_blueprint_health, list):
