@@ -53,7 +53,7 @@
 
     - name: "Filter out response by label of blueprint"
       set_fact:
-        blueprint_health: "{{ output_blueprint_health['json']['items'] | filter_blueprints(blueprint) }}"
+        blueprint_health: "{{ output_blueprint_health['json']['items'] | cleanup_blueprints(blueprint) }}"
 
     # - name: "### PRINT THE RESULT TO CONSOLE ###"
     #   debug:
