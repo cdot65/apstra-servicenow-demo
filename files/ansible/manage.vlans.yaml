@@ -92,7 +92,7 @@
         status_code: 200
         method: POST
         body:
-          query: "match(node('virtual_network', name='vlan', label='linux_web'))"
+          query: "match(node('virtual_network', name='vlan', label='{{ vlan_id }}'))"
         body_format: json
       register: vlan_configuration
 
