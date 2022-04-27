@@ -41,7 +41,7 @@
         status_code: 200
         method: POST
         body:
-          query: "match(node('ep_endpoint_policy', name='policy', label='VMware'))"
+          query: "match(node('ep_endpoint_policy', name='policy', label='{{ connectivity_template_name }}'))"
         body_format: json
       register: ct
 
