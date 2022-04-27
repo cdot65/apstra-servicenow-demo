@@ -62,7 +62,7 @@
     - name: "Create a YAML payload with device details"
       template:
         src: templates/healthcheck.j2
-        dest: "{{ slack_message }}"
+        dest: "tmp/slack.yaml"
         mode: 0640
 
     - name: Post Slack message
@@ -71,5 +71,5 @@
         return_content: yes
         status_code: 200
         method: POST
-        body: "{{ lookup('file', slack_message ) | from_yaml | to_json }}"
+        body: "{{ lookup('file', 'tmp/slack.yaml' ) | from_yaml | to_json }}"
         body_format: json
