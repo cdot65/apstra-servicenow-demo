@@ -29,6 +29,78 @@
         api_token: "{{ api_token.json.token }}"
 
     # #################################################
+    # ### Find VMware CT ID
+    # #################################################
+    - name: "### Find VMware CT ID"
+      ansible.builtin.uri:
+        url: "https://{{ apstra.base_url }}/api/blueprints/{{ blueprint_name }}/qe"
+        validate_certs: False
+        headers:
+          AuthToken: "{{ api_token }}"
+        return_content: False
+        status_code: 200
+        method: POST
+        body:
+          query: "match(node('ep_endpoint_policy', name='policy', label='VMware'))"
+        body_format: json
+      register: ct
+
+    - name: Create an object 'endpoint_policy' and set it to the output
+      ansible.builtin.set_fact:
+        endpoint_policy: "{{ ct.json | cleanup_endpoint_policy }}"
+
+    - name: "### Get configuration of our CT"
+      ansible.builtin.uri:
+        url: "https://{{ apstra.base_url }}/api/blueprints/{{ blueprint_name }}/endpoint-policies/{{ endpoint_policy.id }}"
+        validate_certs: False
+        headers:
+          AuthToken: "{{ api_token }}"
+        return_content: False
+        status_code: 200
+        method: GET
+      register: ct_config
+
+    - name: "### Get SubPolicy 1"
+      ansible.builtin.uri:
+        url: "https://{{ apstra.base_url }}/api/blueprints/{{ blueprint_name }}/endpoint-policies/{{ ct_config.json.endpoint_policy.attributes.subpolicies[0] }}"
+        validate_certs: False
+        headers:
+          AuthToken: "{{ api_token }}"
+        return_content: False
+        status_code: 200
+        method: GET
+      register: sub_policy
+
+    - name: "### Get CT ID"
+      ansible.builtin.uri:
+        url: "https://{{ apstra.base_url }}/api/blueprints/{{ blueprint_name }}/endpoint-policies/{{ sub_policy.json.endpoint_policy.attributes.first_subpolicy }}"
+        validate_certs: False
+        headers:
+          AuthToken: "{{ api_token }}"
+        return_content: False
+        status_code: 200
+        method: GET
+      register: connectivity_template_id
+
+    - name: "### Get VLAN ID"
+      ansible.builtin.uri:
+        url: "https://{{ apstra.base_url }}/api/blueprints/{{ blueprint_name }}/qe"
+        validate_certs: False
+        headers:
+          AuthToken: "{{ api_token }}"
+        return_content: False
+        status_code: 200
+        method: POST
+        body:
+          query: "match(node('virtual_network', name='vlan', label='linux_web'))"
+        body_format: json
+      register: vlan_configuration
+
+    - name: Create an object 'endpoint_policy' and set it to the output
+      ansible.builtin.set_fact:
+        vlan_config: "{{ vlan_configuration.json | cleanup_vlan_config }}"
+
+    # #################################################
     # ### UPDATE CONNECTIVITY TEMPLATE FOR TRUNK
     # #################################################
     - name: "### UPDATE CONNECTIVITY TEMPLATES"
@@ -42,13 +114,14 @@
         method: PUT
         body:
           policies:
-            - id: "{{ connectivity_template_name }}"
+            - id: "{{ connectivity_template_id.json.endpoint_policy.id }}"
               label: "Virtual Network (Multiple)"
               description: "Add a list of VLANs to interfaces, as tagged or untagged."
               policy_type_name: "AttachMultipleVLAN"
               attributes:
-                untagged_vn_node_id: "{{ native }}"
+                untagged_vn_node_id: "{{ connectivity_template_id.json.endpoint_policy.attributes.untagged_vn_node_id }}"
                 tagged_vn_node_ids:
-                  - "{{ vlan_id }}"
+                  - "{{ connectivity_template_id.json.endpoint_policy.attributes.tagged_vn_node_ids[0] }}"
+                  - "{{ vlan_config.id }}"
               visible: false
         body_format: json

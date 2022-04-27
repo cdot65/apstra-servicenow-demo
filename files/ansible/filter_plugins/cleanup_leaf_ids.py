@@ -13,7 +13,7 @@ class FilterModule(object):
     def cleanup_leaf_ids(self, leaf_system_ids):
         """Filter out filler from the response of our leaf IDs.
 
-        Create an empty dictionary `leafs` and fill in spots for our three leafs.
+        Create an empty dictionary `leafs` and fill in spots for our leafs.
 
         Loop over returned leafs and fill in the goods.
         """
