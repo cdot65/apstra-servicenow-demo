@@ -1,0 +1,75 @@
+---
+### ---------------------------------------------------------------------------
+### RETRIEVE ROUTING TABLE FROM DEVICE
+### ---------------------------------------------------------------------------
+- hosts: "all"
+  connection: local
+  gather_facts: False
+  become: False
+  tasks:
+    ### ---------------------------------------------------------------------------
+    ### GET API TOKEN
+    ### ---------------------------------------------------------------------------
+    - name: retrieve an API token for our session
+      ansible.builtin.uri:
+        url: "https://{{ apstra.base_url }}/api/user/login"
+        method: POST
+        headers:
+          Content-Type: application/json
+        status_code: 201
+        validate_certs: False
+        body_format: json
+        body:
+          username: "{{ apstra.username }}"
+          password: "{{ apstra.password }}"
+      register: api_token
+
+    # - name: "### PRINT THE RESULT TO CONSOLE ###"
+    #   debug:
+    #     msg: "{{ output_token.json.accessToken }}"
+
+    - name: create 'api_token' object by setting it equal to value in response
+      ansible.builtin.set_fact:
+        api_token: "{{ api_token.json.token }}"
+
+    ### ---------------------------------------------------------------------------
+    ### GET DEVICE HEALTH
+    ### ---------------------------------------------------------------------------
+    - name: Retrieve blueprints
+      uri:
+        url: "https://{{ apstra.base_url }}/api/blueprints"
+        return_content: yes
+        status_code: 200
+        method: GET
+        body_format: json
+        validate_certs: no
+        headers:
+          AuthToken: "{{ api_token }}"
+      register: output_blueprint_health
+
+    # - name: "### PRINT THE RESULT TO CONSOLE ###"
+    #   debug:
+    #     msg: "{{ output_blueprint_health }}"
+
+    - name: "Filter out response by label of blueprint"
+      set_fact:
+        blueprint_health: "{{ output_blueprint_health['json']['items'] | filter_blueprints(blueprint) }}"
+
+    # - name: "### PRINT THE RESULT TO CONSOLE ###"
+    #   debug:
+    #     msg: "{{ blueprint_health }}"
+
+    - name: "Create a YAML payload with device details"
+      template:
+        src: templates/healthcheck.j2
+        dest: "{{ slack_message }}"
+        mode: 0640
+
+    - name: Post Slack message
+      uri:
+        url: "https://hooks.slack.com/services/{{ apstra.slack }}"
+        return_content: yes
+        status_code: 200
+        method: POST
+        body: "{{ lookup('file', slack_message ) | from_yaml | to_json }}"
+        body_format: json

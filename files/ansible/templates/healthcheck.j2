@@ -1,0 +1,147 @@
+#jinja2: lstrip_blocks: "True (or False)", trim_blocks: "True (or False)"
+---
+blocks:
+- type: header
+  text:
+    type: plain_text
+    text: ":robot_face: Juniper Apstra :robot_face:"
+
+- type: divider
+- type: context
+  elements:
+  - text: "*{{ blueprint }}* | Blueprint Health"
+    type: mrkdwn
+
+- type: divider
+
+- type: section
+  text:
+    type: mrkdwn
+    text: ":paperclip: *Attributes*"
+
+- type: section
+  text:
+    type: mrkdwn
+    text: |-
+      {# Attributes #}
+      :white_small_square: Design: *{{ blueprint_health['design'] }}*
+      :white_small_square: External routers: *{{ blueprint_health['external_router_count'] }}*
+      :white_small_square: Spine switches: *{{ blueprint_health['spine_count'] }}*
+      :white_small_square: Leaf switches: *{{ blueprint_health['leaf_count'] }}*
+      :white_small_square: Servers: *{{ blueprint_health['l2_server_count'] }}*
+      :white_small_square: Status: *{{ blueprint_health['status'] }}*
+
+  accessory:
+    type: image
+    image_url: https://gitlab.com/_calvinr/brand-logos/-/raw/master/apstra_0.3x.png
+    alt_text: Apstra
+
+- type: divider
+
+- type: section
+  text:
+    type: mrkdwn
+    text: ":round_pushpin: *Overall Health*"
+
+- type: section
+  text:
+    type: mrkdwn
+    text: |-
+      {# OVERALL HEALTH #}
+      {% if blueprint_health['anomaly_counts']['all'] == 0 %}
+      :white_small_square: :white_check_mark: *{{ blueprint_health['label'] }}* 
+      {% else %}
+      :white_small_square: :x: *{{ blueprint_health['label'] }}* 
+      {% endif %}
+
+
+- type: section
+  text:
+    type: mrkdwn
+    text: ":spiral_note_pad: *Anomalies*"
+
+- type: section
+  text:
+    type: mrkdwn
+    text: |-
+      {# Anomalies #}
+      {% if blueprint_health['anomaly_counts']['arp'] == 0 %}
+      :white_small_square: :white_check_mark: ARP: *{{ blueprint_health['anomaly_counts']['arp'] }}* 
+      {% else %}
+      :white_small_square: :x: ARP: *{{ blueprint_health['anomaly_counts']['arp'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['bgp'] == 0 %}
+      :white_small_square: :white_check_mark: BGP: *{{ blueprint_health['anomaly_counts']['bgp'] }}* 
+      {% else %}
+      :white_small_square: :x: BGP: *{{ blueprint_health['anomaly_counts']['bgp'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['cabling'] == 0 %}
+      :white_small_square: :white_check_mark: Cabling: *{{ blueprint_health['anomaly_counts']['cabling'] }}* 
+      {% else %}
+      :white_small_square: :x: Cabling: *{{ blueprint_health['anomaly_counts']['cabling'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['config'] == 0 %}
+      :white_small_square: :white_check_mark: Config: *{{ blueprint_health['anomaly_counts']['config'] }}* 
+      {% else %}
+      :white_small_square: :x: Config: *{{ blueprint_health['anomaly_counts']['config'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['counter'] == 0 %}
+      :white_small_square: :white_check_mark: Counter: *{{ blueprint_health['anomaly_counts']['counter'] }}* 
+      {% else %}
+      :white_small_square: :x: Counter: *{{ blueprint_health['anomaly_counts']['counter'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['deployment'] == 0 %}
+      :white_small_square: :white_check_mark: Deployment: *{{ blueprint_health['anomaly_counts']['deployment'] }}* 
+      {% else %}
+      :white_small_square: :x: Deployment: *{{ blueprint_health['anomaly_counts']['deployment'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['hostname'] == 0 %}
+      :white_small_square: :white_check_mark: Hostname: *{{ blueprint_health['anomaly_counts']['hostname'] }}* 
+      {% else %}
+      :white_small_square: :x: Hostname: *{{ blueprint_health['anomaly_counts']['hostname'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['interface'] == 0 %}
+      :white_small_square: :white_check_mark: Interface: *{{ blueprint_health['anomaly_counts']['interface'] }}* 
+      {% else %}
+      :white_small_square: :x: Interface: *{{ blueprint_health['anomaly_counts']['interface'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['lag'] == 0 %}
+      :white_small_square: :white_check_mark: LAG: *{{ blueprint_health['anomaly_counts']['lag'] }}* 
+      {% else %}
+      :white_small_square: :x: LAG: *{{ blueprint_health['anomaly_counts']['lag'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['liveness'] == 0 %}
+      :white_small_square: :white_check_mark: Liveness: *{{ blueprint_health['anomaly_counts']['liveness'] }}* 
+      {% else %}
+      :white_small_square: :x: Liveness: *{{ blueprint_health['anomaly_counts']['liveness'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['mac'] == 0 %}
+      :white_small_square: :white_check_mark: MAC: *{{ blueprint_health['anomaly_counts']['mac'] }}* 
+      {% else %}
+      :white_small_square: :x: MAC: *{{ blueprint_health['anomaly_counts']['mac'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['mlag'] == 0 %}
+      :white_small_square: :white_check_mark: MLAG: *{{ blueprint_health['anomaly_counts']['mlag'] }}* 
+      {% else %}
+      :white_small_square: :x: MLAG: *{{ blueprint_health['anomaly_counts']['mlag'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['probe'] == 0 %}
+      :white_small_square: :white_check_mark: Probe: *{{ blueprint_health['anomaly_counts']['probe'] }}* 
+      {% else %}
+      :white_small_square: :x: Probe: *{{ blueprint_health['anomaly_counts']['probe'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['route'] == 0 %}
+      :white_small_square: :white_check_mark: Route: *{{ blueprint_health['anomaly_counts']['route'] }}* 
+      {% else %}
+      :white_small_square: :x: Route: *{{ blueprint_health['anomaly_counts']['route'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['series'] == 0 %}
+      :white_small_square: :white_check_mark: Series: *{{ blueprint_health['anomaly_counts']['series'] }}* 
+      {% else %}
+      :white_small_square: :x: Series: *{{ blueprint_health['anomaly_counts']['series'] }}* 
+      {% endif %}
+      {% if blueprint_health['anomaly_counts']['streaming'] == 0 %}
+      :white_small_square: :white_check_mark: Streaming: *{{ blueprint_health['anomaly_counts']['streaming'] }}* 
+      {% else %}
+      :white_small_square: :x: Streaming: *{{ blueprint_health['anomaly_counts']['streaming'] }}* 
+      {% endif %}
